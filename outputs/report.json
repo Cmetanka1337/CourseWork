@@ -1,0 +1,90 @@
+{
+  "input_csv": "/Users/vsevolodburtik/.cache/kagglehub/datasets/priyamchoksi/credit-card-transactions-dataset/versions/1/credit_card_transactions.csv",
+  "columns": {
+    "user": "cc_num",
+    "date": "trans_date_trans_time",
+    "amount": "amt",
+    "category": "category"
+  },
+  "stage0": {
+    "rows": 1296675,
+    "users": 983,
+    "min_date": "2019-01-01",
+    "max_date": "2020-06-21",
+    "avg_tx_per_user": 1319.0996948118006,
+    "median_tx_per_user": 1054.0,
+    "users_with_200plus_tx": 908,
+    "share_users_with_200plus_tx": 0.9237029501525941
+  },
+  "stage1": {
+    "raw_unique_categories": 14,
+    "collapsed_unique_categories": 7,
+    "top10_raw": {
+      "gas_transport": 131659,
+      "grocery_pos": 123638,
+      "home": 123115,
+      "shopping_pos": 116672,
+      "kids_pets": 113035,
+      "shopping_net": 97543,
+      "entertainment": 94014,
+      "food_dining": 91461,
+      "personal_care": 90758,
+      "health_fitness": 85879
+    },
+    "top10_collapsed": {
+      "other": 555729,
+      "shopping": 214215,
+      "groceries": 169090,
+      "fuel": 131659,
+      "entertainment": 94014,
+      "restaurants": 91461,
+      "travel": 40507
+    }
+  },
+  "stage3": {
+    "median_active_days_pct": 18.21561338289963,
+    "share_pairs_below_20pct": 0.5348059875018166,
+    "share_pairs_20_to_50pct": 0.3384682458944921,
+    "share_pairs_50plus_pct": 0.12672576660369134
+  },
+  "stage4": {
+    "zero_share": 0.7600455756355116,
+    "mean": 24.641537280880655,
+    "median": 0.0,
+    "p95": 134.81,
+    "p99": 349.27,
+    "skewness": 46.512452845430154
+  },
+  "stage5": {
+    "median_corr_lag1": 0.012962238377998288,
+    "median_corr_lag7": 0.0040346503458600705,
+    "median_corr_lag30": -0.007361355050632043,
+    "share_lag7_below_0_1": 0.9165788284896853,
+    "share_lag7_0_1_to_0_3": 0.0828188525824424,
+    "share_lag7_0_3_plus": 0.0006023189278723084
+  },
+  "stage7": {
+    "median_corr": 0.01780319196126022,
+    "share_corr_0_9_plus": 0.0
+  },
+  "stage8": {
+    "cv_daily_mean_spend": 0.6420771548480294,
+    "between_user_category_variance": 476.2980779154562
+  },
+  "stage10": {
+    "pairs": 6881,
+    "median_event_rate": 0.1821561338289963,
+    "median_corr_lag1": 0.020059342030581184,
+    "median_corr_lag7": 0.02637288326921545,
+    "median_p_event_given_prev0": 0.17832957110609482,
+    "median_p_event_given_prev1": 0.2222222222222222,
+    "always_0_accuracy": 0.7600550134407839,
+    "frequency_accuracy": 0.8003716817176925,
+    "frequency_balanced_accuracy": 0.5
+  },
+  "decision": {
+    "decision": "CASE 1: no_signal",
+    "note": "Forecasting is likely infeasible: weak autocorrelation or extreme sparsity."
+  },
+  "collapse_mode": "manual"
+}

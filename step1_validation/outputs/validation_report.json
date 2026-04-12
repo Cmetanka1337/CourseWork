@@ -1,0 +1,262 @@
+{
+  "validation_report": {
+    "execution_timestamp": "2026-04-12T14:00:51.440812+00:00",
+    "dataset_name": "credit_card_transactions.csv",
+    "section_1_sanity_check": {
+      "total_users": 983,
+      "total_transactions": 1296675,
+      "date_range_start": "2019-01-01",
+      "date_range_end": "2020-06-21",
+      "date_range_days": 537,
+      "avg_transactions_per_user": 1319.0996948118006,
+      "avg_transactions_per_user_per_day": 2.4564240126849173,
+      "status": "PASS"
+    },
+    "section_1_2_user_coverage": {
+      "total_transactions_quantiles": {
+        "p10": 497.2,
+        "p25": 525.0,
+        "p50": 1054.0,
+        "p75": 2025.0,
+        "p90": 2553.8
+      },
+      "activity_span_quantiles": {
+        "p10": 532.2,
+        "p50": 537.0,
+        "p90": 537.0
+      },
+      "avg_txn_per_week_quantiles": {
+        "p10": 6.702362859468732,
+        "p50": 19.905027932960895,
+        "p90": 40.04208566108007
+      },
+      "users_exceeding_thresholds": {
+        "transactions_ge_300": 908,
+        "activity_span_ge_365": 908,
+        "txn_per_week_ge_2_5": 983,
+        "max_gap_le_90": 983
+      },
+      "interpretation": "92.37% of users meet all minimum quality thresholds"
+    },
+    "section_2_user_filtering": {
+      "original_users": 983,
+      "excluded_users_count": 75,
+      "excluded_by_reason": {
+        "insufficient_transactions": 75,
+        "insufficient_activity_span": 75,
+        "insufficient_weekly_rate": 0,
+        "excessive_data_gap": 0
+      },
+      "valid_users_count": 908,
+      "retention_rate": 0.9237029501525941,
+      "status": "PASS",
+      "excluded_user_ids_sample": [
+        "180038493344495",
+        "180040131978916",
+        "180097223252063",
+        "2287277963630565",
+        "2295963260374698",
+        "2716017661090253",
+        "30499715231997",
+        "340187018810220",
+        "340214844585279",
+        "345225948700767",
+        "349813394357327",
+        "3501285649323933",
+        "3521260686633367",
+        "3524485462198080",
+        "3528040995648998",
+        "3529788038921264",
+        "3535211949888417",
+        "3542826960473004",
+        "3543885983111461",
+        "3545578418030657",
+        "3546436741611231",
+        "3547336099599450",
+        "3548710338694745",
+        "3554421171166228",
+        "3562793934111141",
+        "3576207763781753",
+        "3590946339258737",
+        "375623337201129",
+        "378262805520186",
+        "38534201672254",
+        "38817501916673",
+        "4076173495454",
+        "4157213332670159",
+        "4162872756672112717",
+        "4168696938629925",
+        "4180192513916047166",
+        "4204237326785494",
+        "4225628813173670",
+        "4243521033756702612",
+        "4257110907449569602",
+        "4318414072191879",
+        "4457136361520330110",
+        "4457486401506",
+        "4481172224716138389",
+        "4492677353108006",
+        "4575255480814133",
+        "4593569795412",
+        "4598025465633",
+        "4629125581019",
+        "4659625317833446364"
+      ]
+    },
+    "section_3_temporal_split": {
+      "split_date": "2020-03-06",
+      "train_period": {
+        "start_date": "2019-01-01",
+        "end_date": "2020-03-06",
+        "days_span": 430,
+        "transactions_count": 1038223,
+        "unique_users": 908
+      },
+      "test_period": {
+        "start_date": "2020-03-07",
+        "end_date": "2020-06-21",
+        "days_span": 106,
+        "transactions_count": 257711,
+        "unique_users": 908
+      },
+      "train_test_ratio": "1038223:257711",
+      "overlapping_users": 908,
+      "users_only_in_train": 0,
+      "users_only_in_test": 0,
+      "status": "PASS"
+    },
+    "section_4_bucket_stability": {
+      "train_distribution": {
+        "0": 0.0,
+        "1": 0.25018420898015165,
+        "2": 0.49981747659221576,
+        "3": 0.2499983144276326
+      },
+      "test_distribution": {
+        "0": 0.0,
+        "1": 0.2489377636189375,
+        "2": 0.49887664864906817,
+        "3": 0.25218558773199434
+      },
+      "distribution_shift_pct": {
+        "bucket_0": 0.0,
+        "bucket_1": 0.12464453612141546,
+        "bucket_2": 0.0940827943147593,
+        "bucket_3": 0.21872733043617476
+      },
+      "max_shift_pct": 0.21872733043617476,
+      "chi2_statistic": 5.59332340241162,
+      "chi2_p_value": 0.06101340400225084,
+      "status": "PASS"
+    },
+    "section_5_baseline_model": {
+      "description": "Naive forecast: bucket(t+1) = bucket(t)",
+      "train_metrics": {
+        "accuracy": 0.9729216753131722,
+        "f1_weighted": 0.9729812955613556,
+        "f1_macro": 0.3615073816499413,
+        "balanced_accuracy": 0.3616652883326516,
+        "confusion_matrix": [
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            6,
+            66
+          ],
+          [
+            0,
+            3,
+            63,
+            675
+          ],
+          [
+            0,
+            73,
+            675,
+            53759
+          ]
+        ]
+      },
+      "test_metrics": {
+        "accuracy": 0.9703583542250406,
+        "f1_weighted": 0.9749745350486574,
+        "f1_macro": 0.34562303052108906,
+        "balanced_accuracy": 0.3510552095257578,
+        "confusion_matrix": [
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1,
+            8
+          ],
+          [
+            0,
+            2,
+            10,
+            125
+          ],
+          [
+            0,
+            28,
+            238,
+            13150
+          ]
+        ]
+      },
+      "interpretation": "This is the minimum bar. ML models must beat test F1_macro to be meaningful."
+    },
+    "final_verdict": {
+      "overall_status": "GO",
+      "reason_for_verdict": "Dataset is suitable for model training.",
+      "critical_issues": [],
+      "warnings": [],
+      "recommendations": [
+        "Use train-only thresholds for all future bucketization.",
+        "Use temporal CV only after this strict split.",
+        "Target model should beat baseline F1_macro in test."
+      ],
+      "decision_logic": {
+        "sanity_check_passed": true,
+        "user_filtering_passed": true,
+        "temporal_split_valid": true,
+        "bucket_stability_passed": true,
+        "baseline_f1_macro": 0.34562303052108906,
+        "suitable_for_modeling": true
+      }
+    },
+    "data_export": {
+      "train_file_path": "/Users/vsevolodburtik/CourseWork/pythonProject/step1_validation/outputs/train_dataset.csv",
+      "test_file_path": "/Users/vsevolodburtik/CourseWork/pythonProject/step1_validation/outputs/test_dataset.csv",
+      "lag_features_path": {
+        "train": "/Users/vsevolodburtik/CourseWork/pythonProject/step1_validation/outputs/train_lag_features.csv",
+        "test": "/Users/vsevolodburtik/CourseWork/pythonProject/step1_validation/outputs/test_lag_features.csv"
+      },
+      "metadata": {
+        "Q25_threshold": 9.64,
+        "Q75_threshold": 82.98,
+        "bucket_definitions": {
+          "0": "amount == 0",
+          "1": "0 < amount <= 9.640000",
+          "2": "9.640000 < amount <= 82.980000",
+          "3": "amount > 82.980000"
+        },
+        "train_users": 908,
+        "test_users": 908,
+        "train_weeks": 62,
+        "test_weeks": 16
+      }
+    }
+  }
+}

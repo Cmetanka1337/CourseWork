@@ -1,0 +1,18 @@
+{
+  "Q25_threshold": 9.64,
+  "Q75_threshold": 82.98,
+  "split_date": "2020-03-06",
+  "valid_users_count": 908,
+  "train_users": 908,
+  "test_users": 908,
+  "baseline_f1_macro": 0.34562303052108906,
+  "dataset_verdict": "GO",
+  "bucket_definitions": {
+    "0": "amount == 0",
+    "1": "0 < amount <= 9.640000",
+    "2": "9.640000 < amount <= 82.980000",
+    "3": "amount > 82.980000"
+  },
+  "train_weeks": 62,
+  "test_weeks": 16
+}

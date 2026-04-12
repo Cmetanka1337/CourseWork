@@ -1,0 +1,105 @@
+{
+  "tier3_feature_engineering_report": {
+    "execution_timestamp": "2026-04-12T17:28:12.916513+00:00",
+    "phase": "Tier 3 Addition",
+    "input_files": {
+      "train_features": "/Users/vsevolodburtik/CourseWork/pythonProject/step2_feature_engineering/outputs/train_features_engineered.csv",
+      "test_features": "/Users/vsevolodburtik/CourseWork/pythonProject/step2_feature_engineering/outputs/test_features_engineered.csv",
+      "train_dataset": "/Users/vsevolodburtik/CourseWork/pythonProject/step1_validation/outputs/train_dataset.csv",
+      "test_dataset": "/Users/vsevolodburtik/CourseWork/pythonProject/step1_validation/outputs/test_dataset.csv"
+    },
+    "tier3_features_added": {
+      "category_diversity": {
+        "description": "Number of unique categories per user per week",
+        "train_stats": {
+          "train_mean": 8.807595668914155,
+          "train_std": 3.1074632256620016,
+          "train_min": 1.0,
+          "train_max": 14.0,
+          "test_mean": 8.669812711989382
+        }
+      },
+      "dominant_category_ratio": {
+        "description": "Share of most common category (0-1)",
+        "train_stats": {
+          "train_mean": 0.24133442609488256,
+          "train_std": 0.10733062380319756,
+          "train_min": 0.08333333333333333,
+          "train_max": 1.0,
+          "test_mean": 0.247226542353316
+        }
+      },
+      "amount_t_minus_1": {
+        "description": "Amount spent in previous week",
+        "train_stats": {
+          "train_mean": 1306.9711273917073,
+          "train_std": 1212.8326462034183,
+          "train_min": 1.03,
+          "train_max": 30332.0,
+          "test_mean": 1220.130736501743
+        }
+      },
+      "amount_t_minus_2": {
+        "description": "Amount spent 2 weeks ago",
+        "train_stats": {
+          "train_mean": 1312.633608880412,
+          "train_std": 1209.4710409619574,
+          "train_min": 1.03,
+          "train_max": 30332.0,
+          "test_mean": 1205.792553227642
+        }
+      },
+      "bucket_t_minus_1": {
+        "description": "Bucket classification in previous week",
+        "range": "[0, 1, 2, 3]",
+        "train_stats": {
+          "train_mean": 2.9844724426528804,
+          "train_std": 0.1342921392854998,
+          "train_min": 1.0,
+          "train_max": 3.0,
+          "test_mean": 2.9776581625129035
+        }
+      }
+    },
+    "total_features": 21,
+    "features_breakdown": {
+      "metadata": 6,
+      "tier_1": 4,
+      "tier_2": 6,
+      "tier_3": 5
+    },
+    "quality_checks": {
+      "no_nan_values": true,
+      "row_counts_match": true,
+      "value_ranges_valid": true,
+      "distribution_consistency": {
+        "category_diversity": {
+          "ks_statistic": 0.019564631515905928,
+          "p_value": 0.00047187190049728287,
+          "consistent": false
+        },
+        "dominant_category_ratio": {
+          "ks_statistic": 0.014803031802422817,
+          "p_value": 0.016732879730047782,
+          "consistent": false
+        },
+        "amount_t_minus_1": {
+          "ks_statistic": 0.02471018171828665,
+          "p_value": 3.2853974695375135e-06,
+          "consistent": false
+        },
+        "amount_t_minus_2": {
+          "ks_statistic": 0.03330862458888806,
+          "p_value": 6.204822881433516e-11,
+          "consistent": false
+        }
+      }
+    },
+    "output_files": {
+      "train_features": "/Users/vsevolodburtik/CourseWork/pythonProject/step2_feature_engineering/outputs/train_features_tier3.csv",
+      "test_features": "/Users/vsevolodburtik/CourseWork/pythonProject/step2_feature_engineering/outputs/test_features_tier3.csv",
+      "train_rows": 55321,
+      "test_rows": 13562
+    }
+  }
+}

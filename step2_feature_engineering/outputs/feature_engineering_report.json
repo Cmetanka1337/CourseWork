@@ -1,0 +1,311 @@
+{
+  "feature_engineering_report": {
+    "execution_timestamp": "2026-04-12T17:28:12.913174+00:00",
+    "phase_1_user_statistics": {
+      "total_users": 908,
+      "user_mean_amount_stats": {
+        "mean": 1291.6427295557717,
+        "std": 730.167530370397,
+        "min": 297.5951612903226,
+        "max": 3777.544032258065
+      },
+      "user_std_amount_stats": {
+        "mean": 885.0193581341882,
+        "std": 414.2298119315253
+      }
+    },
+    "tier_1_features": {
+      "z_score": {
+        "description": "Normalized deviation from user mean",
+        "formula": "(amount_t - user_mean) / user_std",
+        "range": "[-10, 10]",
+        "train_stats": {
+          "train_mean": 0.007829167120085155,
+          "train_std": 0.9930087178044247,
+          "train_min": -2.047830671330306,
+          "train_max": 7.725663289710205,
+          "test_mean": -0.02616469963688408,
+          "test_std": 1.1343011278750759,
+          "train_non_null": 55321,
+          "test_non_null": 13562
+        }
+      },
+      "entropy": {
+        "description": "Shannon entropy of bucket distribution",
+        "formula": "-sum(p_i * log2(p_i))",
+        "range": "[0, 2]",
+        "train_stats": {
+          "train_mean": 0.03990579374277116,
+          "train_std": 0.18112349507239653,
+          "train_min": -1.4426951601859516e-10,
+          "train_max": 1.5849625002883474,
+          "test_mean": 0.0551128023897827,
+          "test_std": 0.21482592210846108,
+          "train_non_null": 55321,
+          "test_non_null": 13562
+        }
+      },
+      "txn_count": {
+        "description": "Number of individual transactions in week",
+        "range": "[1, inf)",
+        "train_stats": {
+          "train_mean": 18.564035357278428,
+          "train_std": 12.238028078491359,
+          "train_min": 1.0,
+          "train_max": 105.0,
+          "test_mean": 17.679766996018287,
+          "test_std": 10.985205770485285,
+          "train_non_null": 55321,
+          "test_non_null": 13562
+        }
+      },
+      "relative_txn_count": {
+        "description": "Transaction count relative to user average",
+        "formula": "txn_count / user_avg_txn_count",
+        "range": "[0, 10]",
+        "train_stats": {
+          "train_mean": 1.0054716039832288,
+          "train_std": 0.4007553627134455,
+          "train_min": 0.04983922829581993,
+          "train_max": 3.875,
+          "test_mean": 0.9598775234295066,
+          "test_std": 0.34064122084784676,
+          "train_non_null": 55321,
+          "test_non_null": 13562
+        }
+      }
+    },
+    "tier_2_features": {
+      "delta_amount": {
+        "description": "Change in amount from previous week",
+        "formula": "amount_t - amount_t-1",
+        "range": "[-1000, 1000]",
+        "train_stats": {
+          "train_mean": 2.1270904358200324,
+          "train_std": 574.3872118208573,
+          "train_min": -1000.0,
+          "train_max": 1000.0,
+          "test_mean": 51.45368972128005,
+          "test_std": 564.6351300307921,
+          "train_non_null": 55321,
+          "test_non_null": 13562
+        }
+      },
+      "delta_bucket": {
+        "description": "Change in bucket classification",
+        "formula": "bucket_t - bucket_t-1",
+        "range": "[-3, 3]",
+        "train_stats": {
+          "train_mean": 0.00012653422750854106,
+          "train_std": 0.1825246303301516,
+          "train_min": -2.0,
+          "train_max": 2.0,
+          "test_mean": 0.011576463648429436,
+          "test_std": 0.19070319482798836,
+          "train_non_null": 55321,
+          "test_non_null": 13562
+        }
+      },
+      "rolling_mean_8w": {
+        "description": "Mean amount over last 8 prior weeks",
+        "range": "[0, inf)",
+        "train_stats": {
+          "train_mean": 1281.5691511401853,
+          "train_std": 866.3206980940736,
+          "train_min": 0.0,
+          "train_max": 10377.39,
+          "test_mean": 1006.3825703383403,
+          "test_std": 751.3289924575623,
+          "train_non_null": 55321,
+          "test_non_null": 13562
+        }
+      },
+      "rolling_std_8w": {
+        "description": "Std amount over last 8 prior weeks",
+        "range": "[0, inf)",
+        "train_stats": {
+          "train_mean": 653.8581191366318,
+          "train_std": 657.1800919012411,
+          "train_min": 1e-06,
+          "train_max": 10386.247586246558,
+          "test_mean": 544.3748015965836,
+          "test_std": 586.3588029809914,
+          "train_non_null": 55321,
+          "test_non_null": 13562
+        }
+      },
+      "recency_days": {
+        "description": "Days since last transaction before current week",
+        "range": "[0, 180]",
+        "train_stats": {
+          "train_mean": 4.101805824189729,
+          "train_std": 22.73111344061587,
+          "train_min": 1.0,
+          "train_max": 180.0,
+          "test_mean": 13.166715823624834,
+          "test_std": 44.69645103046644,
+          "train_non_null": 55321,
+          "test_non_null": 13562
+        }
+      },
+      "user_cv": {
+        "description": "Coefficient of variation (std/mean)",
+        "formula": "user_std / user_mean",
+        "range": "[0, 10]",
+        "train_stats": {
+          "train_mean": 0.8014660310944445,
+          "train_std": 0.41201354350209296,
+          "train_min": 0.3200544616234861,
+          "train_max": 4.507065066080634,
+          "test_mean": 0.8005421008259527,
+          "test_std": 0.41150707259261365,
+          "train_non_null": 55321,
+          "test_non_null": 13562
+        }
+      }
+    },
+    "tier3_feature_engineering_report": {
+      "execution_timestamp": "2026-04-12T17:28:12.913495+00:00",
+      "phase": "Tier 3 Addition",
+      "input_files": {
+        "train_features": "/Users/vsevolodburtik/CourseWork/pythonProject/step2_feature_engineering/outputs/train_features_engineered.csv",
+        "test_features": "/Users/vsevolodburtik/CourseWork/pythonProject/step2_feature_engineering/outputs/test_features_engineered.csv",
+        "train_dataset": "/Users/vsevolodburtik/CourseWork/pythonProject/step1_validation/outputs/train_dataset.csv",
+        "test_dataset": "/Users/vsevolodburtik/CourseWork/pythonProject/step1_validation/outputs/test_dataset.csv"
+      },
+      "tier3_features_added": {
+        "category_diversity": {
+          "description": "Number of unique categories per user per week",
+          "train_stats": {
+            "train_mean": 8.807595668914155,
+            "train_std": 3.1074632256620016,
+            "train_min": 1.0,
+            "train_max": 14.0,
+            "test_mean": 8.669812711989382
+          }
+        },
+        "dominant_category_ratio": {
+          "description": "Share of most common category (0-1)",
+          "train_stats": {
+            "train_mean": 0.24133442609488256,
+            "train_std": 0.10733062380319756,
+            "train_min": 0.08333333333333333,
+            "train_max": 1.0,
+            "test_mean": 0.247226542353316
+          }
+        },
+        "amount_t_minus_1": {
+          "description": "Amount spent in previous week",
+          "train_stats": {
+            "train_mean": 1306.9711273917073,
+            "train_std": 1212.8326462034183,
+            "train_min": 1.03,
+            "train_max": 30332.0,
+            "test_mean": 1220.130736501743
+          }
+        },
+        "amount_t_minus_2": {
+          "description": "Amount spent 2 weeks ago",
+          "train_stats": {
+            "train_mean": 1312.633608880412,
+            "train_std": 1209.4710409619574,
+            "train_min": 1.03,
+            "train_max": 30332.0,
+            "test_mean": 1205.792553227642
+          }
+        },
+        "bucket_t_minus_1": {
+          "description": "Bucket classification in previous week",
+          "range": "[0, 1, 2, 3]",
+          "train_stats": {
+            "train_mean": 2.9844724426528804,
+            "train_std": 0.1342921392854998,
+            "train_min": 1.0,
+            "train_max": 3.0,
+            "test_mean": 2.9776581625129035
+          }
+        }
+      },
+      "total_features": 21,
+      "features_breakdown": {
+        "metadata": 6,
+        "tier_1": 4,
+        "tier_2": 6,
+        "tier_3": 5
+      },
+      "quality_checks": {
+        "data_leakage": "No leakage detected",
+        "nan_values": {
+          "train": 0,
+          "test": 0
+        },
+        "distribution_similarity": {
+          "z_score": {
+            "ks_statistic": 0.028861286505882378,
+            "p_value": 2.5756183415057832e-08,
+            "distributions_similar": false
+          },
+          "entropy": {
+            "ks_statistic": 0.0661609454328681,
+            "p_value": 6.767059993104202e-42,
+            "distributions_similar": false
+          },
+          "txn_count": {
+            "ks_statistic": 0.024028755703586868,
+            "p_value": 6.777499760884546e-06,
+            "distributions_similar": false
+          },
+          "relative_txn_count": {
+            "ks_statistic": 0.054508491139222515,
+            "p_value": 1.4384802808578737e-28,
+            "distributions_similar": false
+          },
+          "delta_amount": {
+            "ks_statistic": 0.05747607025085838,
+            "p_value": 1.020264002899809e-31,
+            "distributions_similar": false
+          },
+          "delta_bucket": {
+            "ks_statistic": 0.0064316998365328,
+            "p_value": 0.7558550827239363,
+            "distributions_similar": true
+          },
+          "rolling_mean_8w": {
+            "ks_statistic": 0.12494631718688054,
+            "p_value": 1.1349234554550115e-148,
+            "distributions_similar": false
+          },
+          "rolling_std_8w": {
+            "ks_statistic": 0.10577767060001149,
+            "p_value": 1.4224500632909433e-106,
+            "distributions_similar": false
+          },
+          "recency_days": {
+            "ks_statistic": 0.05996841093416416,
+            "p_value": 1.7160851665974209e-34,
+            "distributions_similar": false
+          },
+          "user_cv": {
+            "ks_statistic": 0.0011416537148375983,
+            "p_value": 1.0,
+            "distributions_similar": true
+          }
+        }
+      },
+      "output_files": {
+        "train_features": "/Users/vsevolodburtik/CourseWork/pythonProject/step2_feature_engineering/outputs/train_features_engineered.csv",
+        "test_features": "/Users/vsevolodburtik/CourseWork/pythonProject/step2_feature_engineering/outputs/test_features_engineered.csv",
+        "train_rows": 55321,
+        "test_rows": 13562,
+        "total_features": 10,
+        "train_features_tier3": "/Users/vsevolodburtik/CourseWork/pythonProject/step2_feature_engineering/outputs/train_features_tier3.csv",
+        "test_features_tier3": "/Users/vsevolodburtik/CourseWork/pythonProject/step2_feature_engineering/outputs/test_features_tier3.csv",
+        "total_features_tier3": 15
+      },
+      "metadata_used": {
+        "Q25_threshold": 9.64,
+        "Q75_threshold": 82.98
+      }
+    }
+  }
+}
