@@ -1,15 +1,15 @@
 {
   "comparison": {
     "winner": "Random Forest",
-    "f1_margin": 0.04060572302609172,
-    "winner_justification": "RF has a small but meaningful F1 macro lead of 0.041",
+    "f1_margin": 0.05930921883386747,
+    "winner_justification": "RF has 0.059 higher F1 macro than LR",
     "recommendation": "Use RF as global model for cold start and LR/SGD for personalization updates.",
     "test_metrics": {
       "random_forest": {
-        "f1_macro": 0.3592748840101401,
-        "accuracy": 0.9433333333333334,
-        "precision_macro": 0.35179035355246807,
-        "recall_macro": 0.44983164983164986,
+        "f1_macro": 0.3558221976908946,
+        "accuracy": 0.9831883203067394,
+        "precision_macro": 0.35994106868716885,
+        "recall_macro": 0.35297016164016676,
         "per_class": {
           "0": {
             "precision": 0.0,
@@ -21,27 +21,27 @@
             "precision": 0.0,
             "recall": 0.0,
             "f1": 0.0,
-            "support": 2
+            "support": 9
           },
           "2": {
-            "precision": 0.06153846153846154,
-            "recall": 0.4,
-            "f1": 0.10666666666666667,
-            "support": 10
+            "precision": 0.09,
+            "recall": 0.06569343065693431,
+            "f1": 0.0759493670886076,
+            "support": 137
           },
           "3": {
-            "precision": 0.9938325991189427,
-            "recall": 0.9494949494949495,
-            "f1": 0.9711579853637538,
-            "support": 1188
+            "precision": 0.9898232060615064,
+            "recall": 0.9932170542635659,
+            "f1": 0.9915172259840762,
+            "support": 13416
           }
         }
       },
       "logistic_regression": {
-        "f1_macro": 0.3186691609840484,
-        "accuracy": 0.7808333333333334,
-        "precision_macro": 0.34679940937102643,
-        "recall_macro": 0.560381593714927,
+        "f1_macro": 0.29651297885702715,
+        "accuracy": 0.7201740156319127,
+        "precision_macro": 0.34145521452758754,
+        "recall_macro": 0.550551846193503,
         "per_class": {
           "0": {
             "precision": 0.0,
@@ -50,30 +50,30 @@
             "support": 0
           },
           "1": {
-            "precision": 0.0,
-            "recall": 0.0,
-            "f1": 0.0,
-            "support": 2
+            "precision": 0.00297441998810232,
+            "recall": 0.5555555555555556,
+            "f1": 0.005917159763313609,
+            "support": 9
           },
           "2": {
-            "precision": 0.041474654377880185,
-            "recall": 0.9,
-            "f1": 0.07929515418502203,
-            "support": 10
+            "precision": 0.02375407545412203,
+            "recall": 0.3722627737226277,
+            "f1": 0.0446584938704028,
+            "support": 137
           },
           "3": {
-            "precision": 0.9989235737351991,
-            "recall": 0.7811447811447811,
-            "f1": 0.8767123287671232,
-            "support": 1188
+            "precision": 0.9976371481405383,
+            "recall": 0.7238372093023255,
+            "f1": 0.838963282937365,
+            "support": 13416
           }
         }
       },
       "sgd_classifier": {
-        "f1_macro": 0.3407838627761008,
-        "accuracy": 0.935,
-        "precision_macro": 0.34320660182729146,
-        "recall_macro": 0.34786756453423123,
+        "f1_macro": 0.3467873954297504,
+        "accuracy": 0.9871700339183012,
+        "precision_macro": 0.3690739733971222,
+        "recall_macro": 0.3422706228681445,
         "per_class": {
           "0": {
             "precision": 0.0,
@@ -85,19 +85,19 @@
             "precision": 0.0,
             "recall": 0.0,
             "f1": 0.0,
-            "support": 2
+            "support": 9
           },
           "2": {
-            "precision": 0.038461538461538464,
-            "recall": 0.1,
-            "f1": 0.05555555555555555,
-            "support": 10
+            "precision": 0.11764705882352941,
+            "recall": 0.029197080291970802,
+            "f1": 0.04678362573099415,
+            "support": 137
           },
           "3": {
-            "precision": 0.9911582670203359,
-            "recall": 0.9436026936026936,
-            "f1": 0.9667960327727468,
-            "support": 1188
+            "precision": 0.9895748613678373,
+            "recall": 0.9976147883124628,
+            "f1": 0.9935785605582569,
+            "support": 13416
           }
         }
       }

@@ -2,88 +2,88 @@
   "feature_importance_analysis": {
     "rf_top5": [
       {
-        "feature": "amount_t_minus_2",
-        "importance": 0.17126408842354587
-      },
-      {
         "feature": "amount_t_minus_1",
-        "importance": 0.13324438218725274
-      },
-      {
-        "feature": "user_cv",
-        "importance": 0.12568073156908743
-      },
-      {
-        "feature": "category_diversity",
-        "importance": 0.08510725681389726
+        "importance": 0.12654257051004095
       },
       {
         "feature": "txn_count",
-        "importance": 0.07630497834252038
+        "importance": 0.11645447455778907
+      },
+      {
+        "feature": "user_cv",
+        "importance": 0.10528531209313076
+      },
+      {
+        "feature": "amount_t_minus_2",
+        "importance": 0.10078605667672257
+      },
+      {
+        "feature": "category_diversity",
+        "importance": 0.09632136586001686
       }
     ],
     "lr_top5_abs_coefficients": [
       {
+        "class_label": 3,
+        "feature": "txn_count",
+        "coefficient": 13.058462280726696,
+        "abs_coefficient": 13.058462280726696
+      },
+      {
         "class_label": 1,
-        "feature": "amount_t_minus_1",
-        "coefficient": -10.769866491541658,
-        "abs_coefficient": 10.769866491541658
+        "feature": "txn_count",
+        "coefficient": -12.069664030406079,
+        "abs_coefficient": 12.069664030406079
+      },
+      {
+        "class_label": 1,
+        "feature": "rolling_std_8w",
+        "coefficient": 7.902351458977058,
+        "abs_coefficient": 7.902351458977058
+      },
+      {
+        "class_label": 2,
+        "feature": "rolling_std_8w",
+        "coefficient": -6.781991816418982,
+        "abs_coefficient": 6.781991816418982
       },
       {
         "class_label": 1,
         "feature": "rolling_mean_8w",
-        "coefficient": 7.255561154241122,
-        "abs_coefficient": 7.255561154241122
-      },
-      {
-        "class_label": 3,
-        "feature": "amount_t_minus_1",
-        "coefficient": 7.050751871271478,
-        "abs_coefficient": 7.050751871271478
-      },
-      {
-        "class_label": 1,
-        "feature": "txn_count",
-        "coefficient": -6.7789161400074995,
-        "abs_coefficient": 6.7789161400074995
-      },
-      {
-        "class_label": 3,
-        "feature": "txn_count",
-        "coefficient": 6.774468793265307,
-        "abs_coefficient": 6.774468793265307
+        "coefficient": -5.810246746409487,
+        "abs_coefficient": 5.810246746409487
       }
     ],
     "sgd_top5_abs_coefficients": [
       {
         "class_label": 1,
-        "feature": "txn_count",
-        "coefficient": -18.58928626843544,
-        "abs_coefficient": 18.58928626843544
-      },
-      {
-        "class_label": 1,
-        "feature": "amount_t_minus_1",
-        "coefficient": -11.698848173238057,
-        "abs_coefficient": 11.698848173238057
-      },
-      {
-        "class_label": 1,
-        "feature": "amount_t_minus_2",
-        "coefficient": -8.466390379861817,
-        "abs_coefficient": 8.466390379861817
-      },
-      {
-        "class_label": 1,
         "feature": "category_diversity",
-        "coefficient": -6.9373525687136555,
-        "abs_coefficient": 6.9373525687136555
+        "coefficient": -0.6312032116983802,
+        "abs_coefficient": 0.6312032116983802
+      },
+      {
+        "class_label": 2,
+        "feature": "category_diversity",
+        "coefficient": -0.5075623831002366,
+        "abs_coefficient": 0.5075623831002366
       },
       {
         "class_label": 1,
-        "feature": "relative_txn_count",
-        "coefficient": 6.057982431390712,
-        "abs_coefficient": 6.057982431390712
+        "feature": "txn_count",
+        "coefficient": -0.4669975239762988,
+        "abs_coefficient": 0.4669975239762988
+      },
+      {
+        "class_label": 2,
+        "feature": "txn_count",
+        "coefficient": -0.42197876286487734,
+        "abs_coefficient": 0.42197876286487734
+      },
+      {
+        "class_label": 1,
+        "feature": "rolling_mean_8w",
+        "coefficient": -0.4074960989415649,
+        "abs_coefficient": 0.4074960989415649
       }
     ]
   }
