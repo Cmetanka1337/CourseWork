@@ -1,0 +1,299 @@
+{
+  "model_training_report": {
+    "execution_timestamp": "2026-04-12T20:25:15.595198+00:00",
+    "run_mode": "quick",
+    "data_summary": {
+      "train_rows": 4000,
+      "test_rows": 1200,
+      "n_features": 15,
+      "feature_names": [
+        "z_score",
+        "entropy",
+        "txn_count",
+        "relative_txn_count",
+        "delta_amount",
+        "delta_bucket",
+        "rolling_mean_8w",
+        "rolling_std_8w",
+        "recency_days",
+        "user_cv",
+        "category_diversity",
+        "dominant_category_ratio",
+        "amount_t_minus_1",
+        "amount_t_minus_2",
+        "bucket_t_minus_1"
+      ],
+      "target_distribution_train": {
+        "1": 0.004,
+        "2": 0.025,
+        "3": 0.971
+      },
+      "target_distribution_test": {
+        "1": 0.0016666666666666668,
+        "2": 0.008333333333333333,
+        "3": 0.99
+      },
+      "time_range_train": {
+        "start_week": "2019-W01",
+        "end_week": "2019-W05"
+      },
+      "time_range_test": {
+        "start_week": "2020-W10",
+        "end_week": "2020-W11"
+      }
+    },
+    "random_forest": {
+      "f1_macro": 0.3592748840101401,
+      "accuracy": 0.9433333333333334,
+      "precision_macro": 0.35179035355246807,
+      "recall_macro": 0.44983164983164986,
+      "per_class": {
+        "0": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 0
+        },
+        "1": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 2
+        },
+        "2": {
+          "precision": 0.06153846153846154,
+          "recall": 0.4,
+          "f1": 0.10666666666666667,
+          "support": 10
+        },
+        "3": {
+          "precision": 0.9938325991189427,
+          "recall": 0.9494949494949495,
+          "f1": 0.9711579853637538,
+          "support": 1188
+        }
+      },
+      "best_params": {
+        "n_estimators": 100,
+        "min_samples_split": 15,
+        "min_samples_leaf": 6,
+        "max_features": "log2",
+        "max_depth": 12,
+        "class_weight": "balanced"
+      },
+      "best_cv_score": 0.3699919825026704,
+      "cv_scores_per_fold": [
+        0.41857351509250246,
+        0.35248201862987855,
+        0.37160618458105305,
+        0.35645299003138065,
+        0.35084520417853754
+      ],
+      "cv_std": 0.02537429104146309,
+      "training_time_minutes": 0.14690476041663109
+    },
+    "logistic_regression": {
+      "f1_macro": 0.3186691609840484,
+      "accuracy": 0.7808333333333334,
+      "precision_macro": 0.34679940937102643,
+      "recall_macro": 0.560381593714927,
+      "per_class": {
+        "0": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 0
+        },
+        "1": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 2
+        },
+        "2": {
+          "precision": 0.041474654377880185,
+          "recall": 0.9,
+          "f1": 0.07929515418502203,
+          "support": 10
+        },
+        "3": {
+          "precision": 0.9989235737351991,
+          "recall": 0.7811447811447811,
+          "f1": 0.8767123287671232,
+          "support": 1188
+        }
+      },
+      "best_params": {
+        "lr__C": 100,
+        "lr__class_weight": "balanced",
+        "lr__max_iter": 2000,
+        "lr__penalty": "l2",
+        "lr__solver": "saga"
+      },
+      "best_cv_score": 0.36034839818468767,
+      "cv_scores_per_fold": [
+        0.3718837421596632,
+        0.3396830595127631,
+        0.38667806267806265,
+        0.34370573736072746,
+        0.3597913892122217
+      ],
+      "cv_std": 0.017496628439084047,
+      "training_time_minutes": 0.16418291666668666
+    },
+    "sgd_classifier": {
+      "f1_macro": 0.3407838627761008,
+      "accuracy": 0.935,
+      "precision_macro": 0.34320660182729146,
+      "recall_macro": 0.34786756453423123,
+      "per_class": {
+        "0": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 0
+        },
+        "1": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "support": 2
+        },
+        "2": {
+          "precision": 0.038461538461538464,
+          "recall": 0.1,
+          "f1": 0.05555555555555555,
+          "support": 10
+        },
+        "3": {
+          "precision": 0.9911582670203359,
+          "recall": 0.9436026936026936,
+          "f1": 0.9667960327727468,
+          "support": 1188
+        }
+      },
+      "best_params": {
+        "sgd__alpha": 0.001,
+        "sgd__class_weight": "balanced",
+        "sgd__eta0": 0.001,
+        "sgd__learning_rate": "optimal",
+        "sgd__loss": "log_loss",
+        "sgd__max_iter": 1000,
+        "sgd__penalty": "l2"
+      },
+      "best_cv_score": 0.3742829021989322,
+      "training_time_minutes": 0.013429797216667793
+    },
+    "comparison": {
+      "winner": "Random Forest",
+      "f1_margin": 0.04060572302609172,
+      "winner_justification": "RF has a small but meaningful F1 macro lead of 0.041",
+      "recommendation": "Use RF as global model for cold start and LR/SGD for personalization updates.",
+      "test_metrics": {
+        "random_forest": {
+          "f1_macro": 0.3592748840101401,
+          "accuracy": 0.9433333333333334,
+          "precision_macro": 0.35179035355246807,
+          "recall_macro": 0.44983164983164986,
+          "per_class": {
+            "0": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 0
+            },
+            "1": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 2
+            },
+            "2": {
+              "precision": 0.06153846153846154,
+              "recall": 0.4,
+              "f1": 0.10666666666666667,
+              "support": 10
+            },
+            "3": {
+              "precision": 0.9938325991189427,
+              "recall": 0.9494949494949495,
+              "f1": 0.9711579853637538,
+              "support": 1188
+            }
+          }
+        },
+        "logistic_regression": {
+          "f1_macro": 0.3186691609840484,
+          "accuracy": 0.7808333333333334,
+          "precision_macro": 0.34679940937102643,
+          "recall_macro": 0.560381593714927,
+          "per_class": {
+            "0": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 0
+            },
+            "1": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 2
+            },
+            "2": {
+              "precision": 0.041474654377880185,
+              "recall": 0.9,
+              "f1": 0.07929515418502203,
+              "support": 10
+            },
+            "3": {
+              "precision": 0.9989235737351991,
+              "recall": 0.7811447811447811,
+              "f1": 0.8767123287671232,
+              "support": 1188
+            }
+          }
+        },
+        "sgd_classifier": {
+          "f1_macro": 0.3407838627761008,
+          "accuracy": 0.935,
+          "precision_macro": 0.34320660182729146,
+          "recall_macro": 0.34786756453423123,
+          "per_class": {
+            "0": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 0
+            },
+            "1": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 2
+            },
+            "2": {
+              "precision": 0.038461538461538464,
+              "recall": 0.1,
+              "f1": 0.05555555555555555,
+              "support": 10
+            },
+            "3": {
+              "precision": 0.9911582670203359,
+              "recall": 0.9436026936026936,
+              "f1": 0.9667960327727468,
+              "support": 1188
+            }
+          }
+        }
+      }
+    },
+    "iOS_export_notes": {
+      "rf_export_format": "CoreML static model",
+      "lr_export_format": "CoreML updatable model",
+      "sgd_export_format": "CoreML updatable model",
+      "scaler_export": "JSON with mean and scale",
+      "feature_parity": "See ios_feature_parity_guide.md"
+    }
+  }
+}

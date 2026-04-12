@@ -1,0 +1,90 @@
+{
+  "feature_importance_analysis": {
+    "rf_top5": [
+      {
+        "feature": "amount_t_minus_2",
+        "importance": 0.17126408842354587
+      },
+      {
+        "feature": "amount_t_minus_1",
+        "importance": 0.13324438218725274
+      },
+      {
+        "feature": "user_cv",
+        "importance": 0.12568073156908743
+      },
+      {
+        "feature": "category_diversity",
+        "importance": 0.08510725681389726
+      },
+      {
+        "feature": "txn_count",
+        "importance": 0.07630497834252038
+      }
+    ],
+    "lr_top5_abs_coefficients": [
+      {
+        "class_label": 1,
+        "feature": "amount_t_minus_1",
+        "coefficient": -10.769866491541658,
+        "abs_coefficient": 10.769866491541658
+      },
+      {
+        "class_label": 1,
+        "feature": "rolling_mean_8w",
+        "coefficient": 7.255561154241122,
+        "abs_coefficient": 7.255561154241122
+      },
+      {
+        "class_label": 3,
+        "feature": "amount_t_minus_1",
+        "coefficient": 7.050751871271478,
+        "abs_coefficient": 7.050751871271478
+      },
+      {
+        "class_label": 1,
+        "feature": "txn_count",
+        "coefficient": -6.7789161400074995,
+        "abs_coefficient": 6.7789161400074995
+      },
+      {
+        "class_label": 3,
+        "feature": "txn_count",
+        "coefficient": 6.774468793265307,
+        "abs_coefficient": 6.774468793265307
+      }
+    ],
+    "sgd_top5_abs_coefficients": [
+      {
+        "class_label": 1,
+        "feature": "txn_count",
+        "coefficient": -18.58928626843544,
+        "abs_coefficient": 18.58928626843544
+      },
+      {
+        "class_label": 1,
+        "feature": "amount_t_minus_1",
+        "coefficient": -11.698848173238057,
+        "abs_coefficient": 11.698848173238057
+      },
+      {
+        "class_label": 1,
+        "feature": "amount_t_minus_2",
+        "coefficient": -8.466390379861817,
+        "abs_coefficient": 8.466390379861817
+      },
+      {
+        "class_label": 1,
+        "feature": "category_diversity",
+        "coefficient": -6.9373525687136555,
+        "abs_coefficient": 6.9373525687136555
+      },
+      {
+        "class_label": 1,
+        "feature": "relative_txn_count",
+        "coefficient": 6.057982431390712,
+        "abs_coefficient": 6.057982431390712
+      }
+    ]
+  }
+}

@@ -1,0 +1,106 @@
+{
+  "comparison": {
+    "winner": "Random Forest",
+    "f1_margin": 0.04060572302609172,
+    "winner_justification": "RF has a small but meaningful F1 macro lead of 0.041",
+    "recommendation": "Use RF as global model for cold start and LR/SGD for personalization updates.",
+    "test_metrics": {
+      "random_forest": {
+        "f1_macro": 0.3592748840101401,
+        "accuracy": 0.9433333333333334,
+        "precision_macro": 0.35179035355246807,
+        "recall_macro": 0.44983164983164986,
+        "per_class": {
+          "0": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 0
+          },
+          "1": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 2
+          },
+          "2": {
+            "precision": 0.06153846153846154,
+            "recall": 0.4,
+            "f1": 0.10666666666666667,
+            "support": 10
+          },
+          "3": {
+            "precision": 0.9938325991189427,
+            "recall": 0.9494949494949495,
+            "f1": 0.9711579853637538,
+            "support": 1188
+          }
+        }
+      },
+      "logistic_regression": {
+        "f1_macro": 0.3186691609840484,
+        "accuracy": 0.7808333333333334,
+        "precision_macro": 0.34679940937102643,
+        "recall_macro": 0.560381593714927,
+        "per_class": {
+          "0": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 0
+          },
+          "1": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 2
+          },
+          "2": {
+            "precision": 0.041474654377880185,
+            "recall": 0.9,
+            "f1": 0.07929515418502203,
+            "support": 10
+          },
+          "3": {
+            "precision": 0.9989235737351991,
+            "recall": 0.7811447811447811,
+            "f1": 0.8767123287671232,
+            "support": 1188
+          }
+        }
+      },
+      "sgd_classifier": {
+        "f1_macro": 0.3407838627761008,
+        "accuracy": 0.935,
+        "precision_macro": 0.34320660182729146,
+        "recall_macro": 0.34786756453423123,
+        "per_class": {
+          "0": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 0
+          },
+          "1": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 2
+          },
+          "2": {
+            "precision": 0.038461538461538464,
+            "recall": 0.1,
+            "f1": 0.05555555555555555,
+            "support": 10
+          },
+          "3": {
+            "precision": 0.9911582670203359,
+            "recall": 0.9436026936026936,
+            "f1": 0.9667960327727468,
+            "support": 1188
+          }
+        }
+      }
+    }
+  }
+}
