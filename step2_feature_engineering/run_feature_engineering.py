@@ -22,6 +22,16 @@ def parse_args() -> argparse.Namespace:
         default="/Users/vsevolodburtik/CourseWork/pythonProject/step2_feature_engineering/outputs",
         help="Directory for Step 2 outputs",
     )
+    parser.add_argument(
+        "--bucket-mode",
+        type=str,
+        choices=["user_quantile", "global_quantile"],
+        default="user_quantile",
+        help=(
+            "user_quantile: per-user Q25/Q75 from train only; "
+            "global_quantile: legacy single Q25/Q75 from train"
+        ),
+    )
     return parser.parse_args()
 
 
@@ -32,6 +42,102 @@ def ensure_dir(path: Path) -> None:
 def parse_year_week_to_monday(week_str: str) -> pd.Timestamp:
     year_str, week_part = week_str.split("-W")
     return pd.Timestamp.fromisocalendar(int(year_str), int(week_part), 1)
+
+
+def _apply_bucket(series: pd.Series, q25: float, q75: float) -> pd.Series:
+    buckets = pd.cut(
+        series,
+        bins=[0.0, float(q25), float(q75), float("inf")],
+        labels=[1, 2, 3],
+        include_lowest=True,
+    )
+    if buckets.isna().any():
+        # Guard against unexpected values (for example negatives); map them to lowest bucket.
+        buckets = buckets.fillna(1)
+    return buckets.astype(int)
+
+
+def compute_user_specific_buckets(
+    df_train: pd.DataFrame,
+    df_test: pd.DataFrame,
+    target_col: str = "amount_t_plus_1",
+    output_col: str = "bucket_t_plus_1",
+) -> tuple[pd.DataFrame, pd.DataFrame, list[dict], int]:
+    """
+    Compute per-user Q25/Q75 from train only and apply to train/test.
+    Uses global train quantiles as fallback for sparse users.
+    """
+    df_train_out = df_train.copy()
+    df_test_out = df_test.copy()
+    user_thresholds: list[dict] = []
+
+    global_q25 = float(df_train[target_col].quantile(0.25))
+    global_q75 = float(df_train[target_col].quantile(0.75))
+    if global_q25 == global_q75:
+        eps_g = max(1e-6, abs(global_q25) * 0.01)
+        global_q25 -= eps_g
+        global_q75 += eps_g
+
+    fallback_count = 0
+    train_users = df_train["user_id"].drop_duplicates().tolist()
+    for user_id in train_users:
+        user_train = df_train[df_train["user_id"] == user_id]
+        use_fallback = len(user_train) < 4
+        if use_fallback:
+            q25 = global_q25
+            q75 = global_q75
+            fallback_count += 1
+        else:
+            q25 = float(user_train[target_col].quantile(0.25))
+            q75 = float(user_train[target_col].quantile(0.75))
+            if q25 == q75:
+                eps = max(1e-6, abs(q25) * 0.01)
+                q25 -= eps
+                q75 += eps
+
+        user_thresholds.append(
+            {
+                "user_id": int(user_id),
+                "q25": float(q25),
+                "q75": float(q75),
+                "fallback": bool(use_fallback),
+            }
+        )
+
+        user_train_mask = df_train["user_id"] == user_id
+        df_train_out.loc[user_train_mask, output_col] = _apply_bucket(df_train.loc[user_train_mask, target_col], q25, q75)
+
+        user_test_rows = df_test[df_test["user_id"] == user_id]
+        if not user_test_rows.empty:
+            user_test_mask = df_test["user_id"] == user_id
+            df_test_out.loc[user_test_mask, output_col] = _apply_bucket(df_test.loc[user_test_mask, target_col], q25, q75)
+
+    # Safety: users only in test still receive train-derived global thresholds.
+    unmatched_test_mask = df_test_out[output_col].isna()
+    if unmatched_test_mask.any():
+        df_test_out.loc[unmatched_test_mask, output_col] = _apply_bucket(
+            df_test.loc[unmatched_test_mask, target_col],
+            global_q25,
+            global_q75,
+        )
+
+    df_train_out[output_col] = df_train_out[output_col].astype(int)
+    df_test_out[output_col] = df_test_out[output_col].astype(int)
+    return df_train_out, df_test_out, user_thresholds, fallback_count
+
+
+def validate_target_balance(y_train: pd.Series, y_test: pd.Series, bucket_mode: str) -> tuple[pd.Series, pd.Series]:
+    train_dist = y_train.value_counts(normalize=True).sort_index()
+    test_dist = y_test.value_counts(normalize=True).sort_index()
+    train_majority = float(train_dist.max())
+    test_majority = float(test_dist.max())
+    if train_majority > 0.90 or test_majority > 0.90:
+        raise RuntimeError(
+            f"Target imbalance detected ({bucket_mode}): "
+            f"train majority={train_majority:.1%}, test majority={test_majority:.1%}. "
+            "This will break downstream modeling. Review bucketing logic."
+        )
+    return train_dist, test_dist
 
 
 def compute_entropy(bucket_list: list[int]) -> float:
@@ -197,6 +303,36 @@ def main() -> None:
     for lag_df in [train_lag, test_lag]:
         lag_df["week_start"] = lag_df["week_t"].apply(parse_year_week_to_monday)
 
+    # Recompute bucket labels in Step 2 to avoid degenerate global bucketing from Step 1.
+    if args.bucket_mode == "user_quantile":
+        train_lag, test_lag, user_thresholds_t1, fallback_count_t1 = compute_user_specific_buckets(
+            train_lag,
+            test_lag,
+            target_col="amount_t_plus_1",
+            output_col="bucket_t_plus_1",
+        )
+        train_lag, test_lag, user_thresholds_t0, fallback_count_t0 = compute_user_specific_buckets(
+            train_lag,
+            test_lag,
+            target_col="amount_t",
+            output_col="bucket_t",
+        )
+        print(
+            f"User-specific bucketing enabled: "
+            f"fallback users (t+1)={fallback_count_t1}, fallback users (t)={fallback_count_t0}"
+        )
+    else:
+        q25_global_next = float(train_lag["amount_t_plus_1"].quantile(0.25))
+        q75_global_next = float(train_lag["amount_t_plus_1"].quantile(0.75))
+        q25_global_curr = float(train_lag["amount_t"].quantile(0.25))
+        q75_global_curr = float(train_lag["amount_t"].quantile(0.75))
+        train_lag["bucket_t_plus_1"] = _apply_bucket(train_lag["amount_t_plus_1"], q25_global_next, q75_global_next)
+        test_lag["bucket_t_plus_1"] = _apply_bucket(test_lag["amount_t_plus_1"], q25_global_next, q75_global_next)
+        train_lag["bucket_t"] = _apply_bucket(train_lag["amount_t"], q25_global_curr, q75_global_curr)
+        test_lag["bucket_t"] = _apply_bucket(test_lag["amount_t"], q25_global_curr, q75_global_curr)
+        user_thresholds_t1 = []
+        fallback_count_t1 = 0
+
     # Phase 1: user statistics on train only.
     train_weekly_amount = train_dataset.copy()
     iso_weekly = train_weekly_amount["transaction_date"].dt.isocalendar()
@@ -311,6 +447,12 @@ def main() -> None:
     train_final = train_features[final_cols].copy()
     test_final = test_features[final_cols].copy()
 
+    train_dist, test_dist = validate_target_balance(
+        train_final["bucket_t_plus_1"],
+        test_final["bucket_t_plus_1"],
+        args.bucket_mode,
+    )
+
     stats_summary = {}
     for col in feature_cols:
         stats_summary[col] = {
@@ -415,6 +557,26 @@ def main() -> None:
     report = {
         "feature_engineering_report": {
             "execution_timestamp": datetime.now(timezone.utc).isoformat(),
+            "bucket_configuration": {
+                "mode": args.bucket_mode,
+                "user_quantile_config": {
+                    "q_percentiles": [0.25, 0.75],
+                    "fallback_threshold_min_weeks": 4,
+                    "user_thresholds_summary": {
+                        "q25_min": float(min([t["q25"] for t in user_thresholds_t1])) if user_thresholds_t1 else None,
+                        "q25_median": float(np.median([t["q25"] for t in user_thresholds_t1])) if user_thresholds_t1 else None,
+                        "q25_max": float(max([t["q25"] for t in user_thresholds_t1])) if user_thresholds_t1 else None,
+                        "q75_min": float(min([t["q75"] for t in user_thresholds_t1])) if user_thresholds_t1 else None,
+                        "q75_median": float(np.median([t["q75"] for t in user_thresholds_t1])) if user_thresholds_t1 else None,
+                        "q75_max": float(max([t["q75"] for t in user_thresholds_t1])) if user_thresholds_t1 else None,
+                        "fallback_count": int(fallback_count_t1),
+                    }
+                    if args.bucket_mode == "user_quantile"
+                    else None,
+                },
+                "target_distribution_train_percentages": {str(k): float(v) for k, v in train_dist.to_dict().items()},
+                "target_distribution_test_percentages": {str(k): float(v) for k, v in test_dist.to_dict().items()},
+            },
             "phase_1_user_statistics": {
                 "total_users": int(len(user_stats)),
                 "user_mean_amount_stats": {

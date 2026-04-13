@@ -1,6 +1,35 @@
 {
   "feature_engineering_report": {
-    "execution_timestamp": "2026-04-12T17:28:12.913174+00:00",
+    "execution_timestamp": "2026-04-13T07:10:33.257648+00:00",
+    "bucket_configuration": {
+      "mode": "user_quantile",
+      "user_quantile_config": {
+        "q_percentiles": [
+          0.25,
+          0.75
+        ],
+        "fallback_threshold_min_weeks": 4,
+        "user_thresholds_summary": {
+          "q25_min": 130.95499999999998,
+          "q25_median": 744.745,
+          "q25_max": 2871.62,
+          "q75_min": 322.565,
+          "q75_median": 1440.96,
+          "q75_max": 4695.89,
+          "fallback_count": 0
+        }
+      },
+      "target_distribution_train_percentages": {
+        "1": 0.2616366298512319,
+        "2": 0.4921819923717937,
+        "3": 0.24618137777697438
+      },
+      "target_distribution_test_percentages": {
+        "1": 0.1979796490193187,
+        "2": 0.5561126677481197,
+        "3": 0.24590768323256157
+      }
+    },
     "phase_1_user_statistics": {
       "total_users": 908,
       "user_mean_amount_stats": {
@@ -35,12 +64,12 @@
         "formula": "-sum(p_i * log2(p_i))",
         "range": "[0, 2]",
         "train_stats": {
-          "train_mean": 0.03990579374277116,
-          "train_std": 0.18112349507239653,
+          "train_mean": 0.9223274944165933,
+          "train_std": 0.4589996846376278,
           "train_min": -1.4426951601859516e-10,
           "train_max": 1.5849625002883474,
-          "test_mean": 0.0551128023897827,
-          "test_std": 0.21482592210846108,
+          "test_mean": 0.8316255216784604,
+          "test_std": 0.5288085123357595,
           "train_non_null": 55321,
           "test_non_null": 13562
         }
@@ -96,12 +125,12 @@
         "formula": "bucket_t - bucket_t-1",
         "range": "[-3, 3]",
         "train_stats": {
-          "train_mean": 0.00012653422750854106,
-          "train_std": 0.1825246303301516,
+          "train_mean": 0.000939968547206305,
+          "train_std": 0.9000477122569877,
           "train_min": -2.0,
           "train_max": 2.0,
-          "test_mean": 0.011576463648429436,
-          "test_std": 0.19070319482798836,
+          "test_mean": 0.07521014599616575,
+          "test_std": 0.9028172299791822,
           "train_non_null": 55321,
           "test_non_null": 13562
         }
@@ -165,7 +194,7 @@
       }
     },
     "tier3_feature_engineering_report": {
-      "execution_timestamp": "2026-04-12T17:28:12.913495+00:00",
+      "execution_timestamp": "2026-04-13T07:10:33.258293+00:00",
       "phase": "Tier 3 Addition",
       "input_files": {
         "train_features": "/Users/vsevolodburtik/CourseWork/pythonProject/step2_feature_engineering/outputs/train_features_engineered.csv",
@@ -218,11 +247,11 @@
           "description": "Bucket classification in previous week",
           "range": "[0, 1, 2, 3]",
           "train_stats": {
-            "train_mean": 2.9844724426528804,
-            "train_std": 0.1342921392854998,
+            "train_mean": 2.0099781276549593,
+            "train_std": 0.7161560348559279,
             "train_min": 1.0,
             "train_max": 3.0,
-            "test_mean": 2.9776581625129035
+            "test_mean": 2.0306739418964757
           }
         }
       },
@@ -246,8 +275,8 @@
             "distributions_similar": false
           },
           "entropy": {
-            "ks_statistic": 0.0661609454328681,
-            "p_value": 6.767059993104202e-42,
+            "ks_statistic": 0.09744835854328396,
+            "p_value": 1.7529170351008515e-90,
             "distributions_similar": false
           },
           "txn_count": {
@@ -266,9 +295,9 @@
             "distributions_similar": false
           },
           "delta_bucket": {
-            "ks_statistic": 0.0064316998365328,
-            "p_value": 0.7558550827239363,
-            "distributions_similar": true
+            "ks_statistic": 0.034897510567895196,
+            "p_value": 5.841029149181397e-12,
+            "distributions_similar": false
           },
           "rolling_mean_8w": {
             "ks_statistic": 0.12494631718688054,

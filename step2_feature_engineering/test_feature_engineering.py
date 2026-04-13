@@ -72,6 +72,20 @@ def main() -> None:
     if len(train_t3.columns) != 21 or len(test_t3.columns) != 21:
         raise RuntimeError("Tier 3 outputs must contain 21 columns")
 
+    # Target class balance checks: distribution must be non-degenerate for Step 3 training.
+    train_dist = train_t3["bucket_t_plus_1"].value_counts(normalize=True)
+    test_dist = test_t3["bucket_t_plus_1"].value_counts(normalize=True)
+    train_majority = float(train_dist.max())
+    test_majority = float(test_dist.max())
+    if train_majority >= 0.80:
+        raise RuntimeError(f"Train majority class {train_majority:.1%} exceeds 80% threshold")
+    if test_majority >= 0.80:
+        raise RuntimeError(f"Test majority class {test_majority:.1%} exceeds 80% threshold")
+    if int((train_dist > 0.01).sum()) < 3:
+        raise RuntimeError("Train must have at least 3 classes with >1% support")
+    if int((test_dist > 0.005).sum()) < 3:
+        raise RuntimeError("Test must have at least 3 classes with >0.5% support")
+
     report = json.loads((output_dir / "feature_engineering_report.json").read_text(encoding="utf-8"))
     root = report["feature_engineering_report"]
     if "quality_checks" in root:
@@ -80,6 +94,19 @@ def main() -> None:
         verdict = root["tier3_feature_engineering_report"]["quality_checks"]["nan_values"]
     if verdict["train"] != 0 or verdict["test"] != 0:
         raise RuntimeError("Report says NaNs exist in engineered features")
+
+    bucket_cfg = root.get("bucket_configuration")
+    if not bucket_cfg:
+        raise RuntimeError("Missing bucket_configuration in Step 2 report")
+    if bucket_cfg.get("mode") not in {"user_quantile", "global_quantile"}:
+        raise RuntimeError("Invalid bucket mode in report")
+    if bucket_cfg.get("mode") == "user_quantile":
+        uq_cfg = bucket_cfg.get("user_quantile_config", {})
+        summary = uq_cfg.get("user_thresholds_summary")
+        if not summary:
+            raise RuntimeError("Missing user_thresholds_summary for user_quantile mode")
+        if summary.get("fallback_count") is None:
+            raise RuntimeError("Missing fallback_count in user_thresholds_summary")
 
     tier3_report = json.loads((output_dir / "tier3_feature_engineering_report.json").read_text(encoding="utf-8"))
     rows_match = tier3_report["tier3_feature_engineering_report"]["quality_checks"]["row_counts_match"]

@@ -2,88 +2,88 @@
   "feature_importance_analysis": {
     "rf_top5": [
       {
-        "feature": "amount_t_minus_1",
-        "importance": 0.12654257051004095
+        "feature": "relative_txn_count",
+        "importance": 0.24088814692554056
+      },
+      {
+        "feature": "z_score",
+        "importance": 0.11660961475046815
+      },
+      {
+        "feature": "rolling_std_8w",
+        "importance": 0.08427976544996314
+      },
+      {
+        "feature": "rolling_mean_8w",
+        "importance": 0.07298224375208
       },
       {
         "feature": "txn_count",
-        "importance": 0.11645447455778907
-      },
-      {
-        "feature": "user_cv",
-        "importance": 0.10528531209313076
-      },
-      {
-        "feature": "amount_t_minus_2",
-        "importance": 0.10078605667672257
-      },
-      {
-        "feature": "category_diversity",
-        "importance": 0.09632136586001686
+        "importance": 0.07258462560003492
       }
     ],
     "lr_top5_abs_coefficients": [
       {
         "class_label": 3,
+        "feature": "relative_txn_count",
+        "coefficient": 0.3053053152678732,
+        "abs_coefficient": 0.3053053152678732
+      },
+      {
+        "class_label": 1,
+        "feature": "relative_txn_count",
+        "coefficient": -0.2780078988932272,
+        "abs_coefficient": 0.2780078988932272
+      },
+      {
+        "class_label": 3,
         "feature": "txn_count",
-        "coefficient": 13.058462280726696,
-        "abs_coefficient": 13.058462280726696
+        "coefficient": 0.21023067895120132,
+        "abs_coefficient": 0.21023067895120132
       },
       {
         "class_label": 1,
         "feature": "txn_count",
-        "coefficient": -12.069664030406079,
-        "abs_coefficient": 12.069664030406079
+        "coefficient": -0.19732746273224439,
+        "abs_coefficient": 0.19732746273224439
       },
       {
-        "class_label": 1,
-        "feature": "rolling_std_8w",
-        "coefficient": 7.902351458977058,
-        "abs_coefficient": 7.902351458977058
-      },
-      {
-        "class_label": 2,
-        "feature": "rolling_std_8w",
-        "coefficient": -6.781991816418982,
-        "abs_coefficient": 6.781991816418982
-      },
-      {
-        "class_label": 1,
+        "class_label": 3,
         "feature": "rolling_mean_8w",
-        "coefficient": -5.810246746409487,
-        "abs_coefficient": 5.810246746409487
+        "coefficient": -0.11503846845004681,
+        "abs_coefficient": 0.11503846845004681
       }
     ],
     "sgd_top5_abs_coefficients": [
       {
-        "class_label": 1,
-        "feature": "category_diversity",
-        "coefficient": -0.6312032116983802,
-        "abs_coefficient": 0.6312032116983802
-      },
-      {
-        "class_label": 2,
-        "feature": "category_diversity",
-        "coefficient": -0.5075623831002366,
-        "abs_coefficient": 0.5075623831002366
-      },
-      {
-        "class_label": 1,
+        "class_label": 3,
         "feature": "txn_count",
-        "coefficient": -0.4669975239762988,
-        "abs_coefficient": 0.4669975239762988
+        "coefficient": 0.5348469864476982,
+        "abs_coefficient": 0.5348469864476982
       },
       {
-        "class_label": 2,
-        "feature": "txn_count",
-        "coefficient": -0.42197876286487734,
-        "abs_coefficient": 0.42197876286487734
+        "class_label": 3,
+        "feature": "relative_txn_count",
+        "coefficient": 0.41537069555065825,
+        "abs_coefficient": 0.41537069555065825
       },
       {
         "class_label": 1,
+        "feature": "relative_txn_count",
+        "coefficient": -0.40481005567815814,
+        "abs_coefficient": 0.40481005567815814
+      },
+      {
+        "class_label": 3,
         "feature": "rolling_mean_8w",
-        "coefficient": -0.4074960989415649,
-        "abs_coefficient": 0.4074960989415649
+        "coefficient": -0.34744089463233324,
+        "abs_coefficient": 0.34744089463233324
+      },
+      {
+        "class_label": 1,
+        "feature": "txn_count",
+        "coefficient": -0.3304834253781571,
+        "abs_coefficient": 0.3304834253781571
       }
     ]
   }

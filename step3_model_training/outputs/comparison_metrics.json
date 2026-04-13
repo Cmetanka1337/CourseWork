@@ -1,15 +1,15 @@
 {
   "comparison": {
     "winner": "Random Forest",
-    "f1_margin": 0.05930921883386747,
-    "winner_justification": "RF has 0.059 higher F1 macro than LR",
+    "f1_margin": 0.02785021815574762,
+    "winner_justification": "RF has a small but meaningful F1 macro lead of 0.028",
     "recommendation": "Use RF as global model for cold start and LR/SGD for personalization updates.",
     "test_metrics": {
       "random_forest": {
-        "f1_macro": 0.3558221976908946,
-        "accuracy": 0.9831883203067394,
-        "precision_macro": 0.35994106868716885,
-        "recall_macro": 0.35297016164016676,
+        "f1_macro": 0.3408247652747607,
+        "accuracy": 0.36292582215012537,
+        "precision_macro": 0.3564068450459595,
+        "recall_macro": 0.36178207071774365,
         "per_class": {
           "0": {
             "precision": 0.0,
@@ -18,30 +18,30 @@
             "support": 0
           },
           "1": {
-            "precision": 0.0,
-            "recall": 0.0,
-            "f1": 0.0,
-            "support": 9
+            "precision": 0.21887850467289718,
+            "recall": 0.4361266294227188,
+            "f1": 0.2914747977598009,
+            "support": 2685
           },
           "2": {
-            "precision": 0.09,
-            "recall": 0.06569343065693431,
-            "f1": 0.0759493670886076,
-            "support": 137
+            "precision": 0.5640873015873016,
+            "recall": 0.3769557146645452,
+            "f1": 0.4519154347480528,
+            "support": 7542
           },
           "3": {
-            "precision": 0.9898232060615064,
-            "recall": 0.9932170542635659,
-            "f1": 0.9915172259840762,
-            "support": 13416
+            "precision": 0.2862547288776797,
+            "recall": 0.27226386806596703,
+            "f1": 0.2790840633164285,
+            "support": 3335
           }
         }
       },
       "logistic_regression": {
-        "f1_macro": 0.29651297885702715,
-        "accuracy": 0.7201740156319127,
-        "precision_macro": 0.34145521452758754,
-        "recall_macro": 0.550551846193503,
+        "f1_macro": 0.31297454711901307,
+        "accuracy": 0.3136705500663619,
+        "precision_macro": 0.35077086342410285,
+        "recall_macro": 0.3595923367957552,
         "per_class": {
           "0": {
             "precision": 0.0,
@@ -50,30 +50,30 @@
             "support": 0
           },
           "1": {
-            "precision": 0.00297441998810232,
-            "recall": 0.5555555555555556,
-            "f1": 0.005917159763313609,
-            "support": 9
+            "precision": 0.21399754429047535,
+            "recall": 0.4543761638733706,
+            "f1": 0.29096112568566657,
+            "support": 2685
           },
           "2": {
-            "precision": 0.02375407545412203,
-            "recall": 0.3722627737226277,
-            "f1": 0.0446584938704028,
-            "support": 137
+            "precision": 0.563594317806409,
+            "recall": 0.2261999469636701,
+            "f1": 0.3228309206168985,
+            "support": 7542
           },
           "3": {
-            "precision": 0.9976371481405383,
-            "recall": 0.7238372093023255,
-            "f1": 0.838963282937365,
-            "support": 13416
+            "precision": 0.2747207281754241,
+            "recall": 0.39820089955022486,
+            "f1": 0.32513159505447425,
+            "support": 3335
           }
         }
       },
       "sgd_classifier": {
-        "f1_macro": 0.3467873954297504,
-        "accuracy": 0.9871700339183012,
-        "precision_macro": 0.3690739733971222,
-        "recall_macro": 0.3422706228681445,
+        "f1_macro": 0.3461891204099396,
+        "accuracy": 0.4146143636631765,
+        "precision_macro": 0.34780269339414954,
+        "recall_macro": 0.3472351111428607,
         "per_class": {
           "0": {
             "precision": 0.0,
@@ -82,22 +82,22 @@
             "support": 0
           },
           "1": {
-            "precision": 0.0,
-            "recall": 0.0,
-            "f1": 0.0,
-            "support": 9
+            "precision": 0.20867455262359721,
+            "recall": 0.25623836126629423,
+            "f1": 0.23002340354396522,
+            "support": 2685
           },
           "2": {
-            "precision": 0.11764705882352941,
-            "recall": 0.029197080291970802,
-            "f1": 0.04678362573099415,
-            "support": 137
+            "precision": 0.5604158228702578,
+            "recall": 0.5503845133916733,
+            "f1": 0.5553548732356679,
+            "support": 7542
           },
           "3": {
-            "precision": 0.9895748613678373,
-            "recall": 0.9976147883124628,
-            "f1": 0.9935785605582569,
-            "support": 13416
+            "precision": 0.2743177046885934,
+            "recall": 0.2350824587706147,
+            "f1": 0.2531890844501857,
+            "support": 3335
           }
         }
       }

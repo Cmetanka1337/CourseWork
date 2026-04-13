@@ -1,6 +1,6 @@
 {
   "tier3_feature_engineering_report": {
-    "execution_timestamp": "2026-04-12T17:28:12.916513+00:00",
+    "execution_timestamp": "2026-04-13T07:10:33.261200+00:00",
     "phase": "Tier 3 Addition",
     "input_files": {
       "train_features": "/Users/vsevolodburtik/CourseWork/pythonProject/step2_feature_engineering/outputs/train_features_engineered.csv",
@@ -53,11 +53,11 @@
         "description": "Bucket classification in previous week",
         "range": "[0, 1, 2, 3]",
         "train_stats": {
-          "train_mean": 2.9844724426528804,
-          "train_std": 0.1342921392854998,
+          "train_mean": 2.0099781276549593,
+          "train_std": 0.7161560348559279,
           "train_min": 1.0,
           "train_max": 3.0,
-          "test_mean": 2.9776581625129035
+          "test_mean": 2.0306739418964757
         }
       }
     },
