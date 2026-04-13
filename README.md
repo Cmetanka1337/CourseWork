@@ -59,3 +59,41 @@ If `--dataset-file` is not provided, the script picks the largest CSV from the d
 python3 smoke_test.py
 ```
 
+## Berka feasibility evaluation
+
+The repository now includes a parallel Berka pipeline for honest time-based feasibility checks:
+
+- `step0_berka_ingestion/run_berka_ingestion.py`
+- `step1_berka_weekly_builder/run_build_weekly.py`
+- `step3_model_training_berka/train_classification.py`
+- `step3_regression_training/train_regression.py`
+- `reports/berka_feasibility/generate_feasibility_report.py`
+
+Quick run:
+
+```bash
+python3 step0_berka_ingestion/run_berka_ingestion.py
+python3 step1_berka_weekly_builder/run_build_weekly.py
+python3 step3_model_training_berka/train_classification.py --quick
+python3 step3_model_training_berka/train_classification.py --quick --target bucket_net_t_plus_1
+python3 step3_regression_training/train_regression.py --quick
+python3 step3_model_training_berka/generate_quick_vs_full_comparison.py
+python3 reports/berka_feasibility/generate_feasibility_report.py
+python3 reports/berka_feasibility/generate_dataset_analysis.py
+```
+
+See full instructions in `docs/berka_evaluation.md`.
+
+Key Berka artifacts:
+
+- `step3_model_training_berka/outputs/classification_report_full.json`
+- `step3_model_training_berka/outputs/quick_vs_full_comparison.md`
+- `step3_regression_training/outputs/regression_report_full.json`
+- `reports/berka_feasibility/berka_dataset_analysis.md`
+
+## Quick smoke tests
+
+```bash
+python3 smoke_test.py
+python3 smoke_test_berka.py
+```

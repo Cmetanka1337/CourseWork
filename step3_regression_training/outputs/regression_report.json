@@ -1,0 +1,109 @@
+{
+  "execution_timestamp": "2026-04-13T11:23:22.323703+00:00",
+  "cv_strategy": "TimeSeriesSplit(n_splits=3)",
+  "baselines_test": {
+    "persistence_last_value": {
+      "mae": 2847.25725,
+      "rmse": 8643.206345636438,
+      "mape_positive_only": 82.30203699076519
+    },
+    "rolling_mean_4": {
+      "mae": 2890.779814583333,
+      "rmse": 7351.188496285943,
+      "mape_positive_only": 82.88921087378382
+    }
+  },
+  "models_test": {
+    "ridge": {
+      "mae": 4170.50242175571,
+      "rmse": 7529.200780276174,
+      "mape_positive_only": 291.80785885553775,
+      "skill_mae_vs_persistence": 1.4647438062562523
+    },
+    "elasticnet": {
+      "mae": 4177.580077230231,
+      "rmse": 7528.122561320104,
+      "mape_positive_only": 294.49954646767094,
+      "skill_mae_vs_persistence": 1.4672295863783404
+    },
+    "sgd_regressor": {
+      "mae": 4268.674954437693,
+      "rmse": 7568.990503344541,
+      "mape_positive_only": 321.3382941655536,
+      "skill_mae_vs_persistence": 1.4992234911115574
+    }
+  },
+  "cv_mae": {
+    "ridge": [
+      6096.722274635462,
+      5259.433772554704,
+      4249.873345933364
+    ],
+    "elasticnet": [
+      6102.523508788587,
+      5258.60778542913,
+      4246.676117978652
+    ],
+    "sgd_regressor": [
+      6144.1115535301,
+      5375.122852682151,
+      4226.428789315742
+    ]
+  },
+  "top_category_metrics_ridge": [
+    {
+      "category": "outflow:sipo",
+      "support": 951,
+      "mae": 1194.2514342644324,
+      "rmse": 1373.830745477175
+    },
+    {
+      "category": "outflow:vyber",
+      "support": 937,
+      "mae": 7850.183020941913,
+      "rmse": 11207.916713804792
+    },
+    {
+      "category": "inflow:vklad",
+      "support": 861,
+      "mae": 7145.410782588206,
+      "rmse": 10767.70417763493
+    },
+    {
+      "category": "outflow:prevod na ucet",
+      "support": 425,
+      "mae": 1190.195711365806,
+      "rmse": 1505.9161005946917
+    },
+    {
+      "category": "inflow:duchod",
+      "support": 240,
+      "mae": 266.8739516594215,
+      "rmse": 318.64244941233494
+    },
+    {
+      "category": "inflow:prevod z uctu",
+      "support": 211,
+      "mae": 4786.55216911428,
+      "rmse": 5114.928896924048
+    },
+    {
+      "category": "outflow:uver",
+      "support": 211,
+      "mae": 1236.5455233924342,
+      "rmse": 1545.218046627962
+    },
+    {
+      "category": "outflow:pojistne",
+      "support": 130,
+      "mae": 929.2936493512086,
+      "rmse": 1190.1929113065319
+    },
+    {
+      "category": "outflow:vyber kartou",
+      "support": 34,
+      "mae": 2261.5201571485054,
+      "rmse": 2619.4718202089953
+    }
+  ]
+}

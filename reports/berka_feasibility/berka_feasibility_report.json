@@ -1,0 +1,97 @@
+{
+  "execution_timestamp": "2026-04-13T12:11:15.918317+00:00",
+  "ingestion_summary": {
+    "rows_normalized": 1056320,
+    "unique_users": 4500,
+    "date_range_start": "1993-01-01",
+    "date_range_end": "1998-12-31"
+  },
+  "signal": {
+    "accounts": 4500,
+    "weeks_per_account_quantiles": {
+      "p25": 64.0,
+      "p50": 98.0,
+      "p75": 164.0
+    },
+    "corr_outflow_t_vs_t_minus_1": 0.09530076751791752,
+    "corr_inflow_t_minus_1_vs_outflow_t_plus_1": 0.21477991714914565
+  },
+  "classification": {
+    "verdict": "GO",
+    "gain_vs_persistence_f1": 0.2609038938154472,
+    "baseline_f1_macro": 0.19855953042175312,
+    "rf_f1": 0.4594634242372003,
+    "lr_f1": 0.3635175165615172,
+    "sgd_f1": 0.3869079066296698
+  },
+  "regression": {
+    "verdict": "GO",
+    "improvement_vs_persistence": 0.10244189123829012,
+    "baseline_mae": 3933.4632273466605,
+    "ridge_mae": 3530.5118152210002,
+    "enet_mae": 3530.607171599775,
+    "sgd_mae": 3538.6337714559604,
+    "top_category_metrics_ridge": [
+      {
+        "category": "outflow:vyber",
+        "support": 9434,
+        "mae": 7809.3930760851545,
+        "rmse": 11952.236287350472
+      },
+      {
+        "category": "inflow:urok",
+        "support": 8683,
+        "mae": 259.1467148036674,
+        "rmse": 468.3597085341379
+      },
+      {
+        "category": "inflow:vklad",
+        "support": 5037,
+        "mae": 8791.131335519221,
+        "rmse": 12760.37244830755
+      },
+      {
+        "category": "outflow:sluzby",
+        "support": 4364,
+        "mae": 210.9723877607485,
+        "rmse": 312.3911370812041
+      },
+      {
+        "category": "outflow:sipo",
+        "support": 4297,
+        "mae": 443.267623074657,
+        "rmse": 569.3140287464431
+      },
+      {
+        "category": "outflow:prevod na ucet",
+        "support": 2127,
+        "mae": 590.3676801701794,
+        "rmse": 860.5377853383729
+      },
+      {
+        "category": "inflow:prevod z uctu",
+        "support": 1108,
+        "mae": 7966.3015922708655,
+        "rmse": 11519.80044510048
+      },
+      {
+        "category": "inflow:duchod",
+        "support": 981,
+        "mae": 143.68677704664128,
+        "rmse": 171.2466375681203
+      },
+      {
+        "category": "outflow:uver",
+        "support": 854,
+        "mae": 492.3363124608335,
+        "rmse": 631.0119666012888
+      },
+      {
+        "category": "outflow:pojistne",
+        "support": 659,
+        "mae": 301.90107576031096,
+        "rmse": 428.84829532566
+      }
+    ]
+  }
+}

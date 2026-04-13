@@ -1,0 +1,147 @@
+{
+  "execution_timestamp": "2026-04-13T12:11:03.385299+00:00",
+  "run_mode": "full",
+  "cv_strategy": "TimeSeriesSplit(n_splits=3)",
+  "rows": {
+    "train": 913943,
+    "test": 38118
+  },
+  "baselines_test": {
+    "persistence_last_value": {
+      "mae": 3933.4632273466605,
+      "rmse": 10034.17002626107,
+      "mape_positive_only": 84.6943439626681
+    },
+    "rolling_mean_4": {
+      "mae": 3385.9601026199343,
+      "rmse": 8066.423693882676,
+      "mape_positive_only": 77.34400651403558
+    }
+  },
+  "models_test": {
+    "ridge": {
+      "mae": 3530.5118152210002,
+      "rmse": 7805.103535399101,
+      "mape_positive_only": 344.3318701645262,
+      "skill_mae_vs_persistence": 0.8975581087617098
+    },
+    "elasticnet": {
+      "mae": 3530.607171599775,
+      "rmse": 7806.427476347268,
+      "mape_positive_only": 348.74585642300156,
+      "skill_mae_vs_persistence": 0.8975823511082791
+    },
+    "sgd_regressor": {
+      "mae": 3538.6337714559604,
+      "rmse": 7825.775636647552,
+      "mape_positive_only": 403.2081777563503,
+      "skill_mae_vs_persistence": 0.8996229447003031
+    }
+  },
+  "cv_mae": {
+    "ridge": [
+      2986.49387807764,
+      3003.419182561247,
+      2756.6702089582145
+    ],
+    "elasticnet": [
+      2984.742930097364,
+      3001.7874936424146,
+      2755.1384562616877
+    ],
+    "sgd_regressor": [
+      3070.7618580255835,
+      3078.5952235225427,
+      2838.14526837539
+    ]
+  },
+  "cv_fold_metrics_file": "full_fold_metrics.csv",
+  "stability": {
+    "ridge": {
+      "degradation": "no",
+      "relative_increase": -0.038368448221669675,
+      "head_mean_mae": 2994.9565303194436,
+      "tail_mean_mae": 2880.0446957597305
+    },
+    "elasticnet": {
+      "degradation": "no",
+      "relative_increase": -0.038353513234506066,
+      "head_mean_mae": 2993.2652118698893,
+      "tail_mean_mae": 2878.462974952051
+    },
+    "sgd_regressor": {
+      "degradation": "no",
+      "relative_increase": -0.03782779021699472,
+      "head_mean_mae": 3074.678540774063,
+      "tail_mean_mae": 2958.3702459489664
+    }
+  },
+  "acceptance": {
+    "gain_formula": "(MAE_persistence - MAE_model) / MAE_persistence",
+    "best_improvement": 0.10244189123829012,
+    "passes_50pct_gain": false,
+    "passes_70pct_gain": false
+  },
+  "top_category_metrics_ridge": [
+    {
+      "category": "outflow:vyber",
+      "support": 9434,
+      "mae": 7809.3930760851545,
+      "rmse": 11952.236287350472
+    },
+    {
+      "category": "inflow:urok",
+      "support": 8683,
+      "mae": 259.1467148036674,
+      "rmse": 468.3597085341379
+    },
+    {
+      "category": "inflow:vklad",
+      "support": 5037,
+      "mae": 8791.131335519221,
+      "rmse": 12760.37244830755
+    },
+    {
+      "category": "outflow:sluzby",
+      "support": 4364,
+      "mae": 210.9723877607485,
+      "rmse": 312.3911370812041
+    },
+    {
+      "category": "outflow:sipo",
+      "support": 4297,
+      "mae": 443.267623074657,
+      "rmse": 569.3140287464431
+    },
+    {
+      "category": "outflow:prevod na ucet",
+      "support": 2127,
+      "mae": 590.3676801701794,
+      "rmse": 860.5377853383729
+    },
+    {
+      "category": "inflow:prevod z uctu",
+      "support": 1108,
+      "mae": 7966.3015922708655,
+      "rmse": 11519.80044510048
+    },
+    {
+      "category": "inflow:duchod",
+      "support": 981,
+      "mae": 143.68677704664128,
+      "rmse": 171.2466375681203
+    },
+    {
+      "category": "outflow:uver",
+      "support": 854,
+      "mae": 492.3363124608335,
+      "rmse": 631.0119666012888
+    },
+    {
+      "category": "outflow:pojistne",
+      "support": 659,
+      "mae": 301.90107576031096,
+      "rmse": 428.84829532566
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "execution_timestamp": "2026-04-13T11:22:19.696710+00:00",
+  "input_file": "/Users/vsevolodburtik/CourseWork/pythonProject/data/berka/raw/trans.csv",
+  "rows_read": 1056320,
+  "rows_normalized": 1056320,
+  "unique_users": 4500,
+  "date_range_start": "1993-01-01",
+  "date_range_end": "1998-12-31",
+  "missing_rates": {
+    "user_id": 0.0,
+    "transaction_date": 0.0,
+    "amount": 0.0,
+    "category": 0.0,
+    "flow_direction": 0.0
+  },
+  "flow_counts": {
+    "outflow": 651237,
+    "inflow": 405083
+  },
+  "top_categories": [
+    {
+      "category": "outflow:vyber",
+      "count": 274675
+    },
+    {
+      "category": "inflow:urok",
+      "count": 183114
+    },
+    {
+      "category": "inflow:vklad",
+      "count": 156743
+    },
+    {
+      "category": "outflow:sluzby",
+      "count": 155832
+    },
+    {
+      "category": "outflow:sipo",
+      "count": 118065
+    },
+    {
+      "category": "outflow:prevod na ucet",
+      "count": 60972
+    },
+    {
+      "category": "inflow:prevod z uctu",
+      "count": 34888
+    },
+    {
+      "category": "inflow:duchod",
+      "count": 30338
+    },
+    {
+      "category": "outflow:pojistne",
+      "count": 18500
+    },
+    {
+      "category": "outflow:uver",
+      "count": 13580
+    },
+    {
+      "category": "outflow:vyber kartou",
+      "count": 8036
+    },
+    {
+      "category": "outflow:sankc. urok",
+      "count": 1577
+    }
+  ],
+  "category_rule": "category = f'{flow_direction}:{k_symbol or operation or type}'",
+  "output_file": "/Users/vsevolodburtik/CourseWork/pythonProject/data/berka/processed/transactions_normalized.csv"
+}

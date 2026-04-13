@@ -1,0 +1,870 @@
+{
+  "population": {
+    "accounts": 4500,
+    "weeks_per_account_quantiles": {
+      "p10": 48.900000000000034,
+      "p25": 72.0,
+      "p50": 106.0,
+      "p75": 171.0,
+      "p90": 204.0
+    },
+    "short_accounts_share": {
+      "lt_8_weeks": 0.0,
+      "lt_12_weeks": 0.0006666666666666666
+    }
+  },
+  "signal": {
+    "corr_outflow_t_vs_t_minus_1": 0.09443459965646515,
+    "corr_net_t_vs_t_minus_1": -0.33032292270387903,
+    "corr_inflow_t_minus_1_vs_outflow_t_plus_1": 0.21266050184508672,
+    "volatility_cv_quantiles": {
+      "p25": 1.0758302157198576,
+      "p50": 1.205824744974605,
+      "p75": 1.3742632773641494
+    }
+  },
+  "temporal": {
+    "weekly_points": 314,
+    "time_start": "1992-W53",
+    "time_end": "1998-W53"
+  },
+  "regression_sparsity": {
+    "categories_total": 12,
+    "top10_categories": [
+      {
+        "category": "outflow:vyber",
+        "support": 218205
+      },
+      {
+        "category": "inflow:urok",
+        "support": 172053
+      },
+      {
+        "category": "outflow:sluzby",
+        "support": 151436
+      },
+      {
+        "category": "inflow:vklad",
+        "support": 139666
+      },
+      {
+        "category": "outflow:sipo",
+        "support": 114768
+      },
+      {
+        "category": "outflow:prevod na ucet",
+        "support": 54617
+      },
+      {
+        "category": "inflow:prevod z uctu",
+        "support": 34022
+      },
+      {
+        "category": "inflow:duchod",
+        "support": 29598
+      },
+      {
+        "category": "outflow:pojistne",
+        "support": 17990
+      },
+      {
+        "category": "outflow:uver",
+        "support": 12898
+      }
+    ],
+    "tail_share_below_50": 0.0
+  },
+  "model_evidence": {
+    "classification_full_spend": {
+      "execution_timestamp": "2026-04-13T11:49:50.645532+00:00",
+      "run_mode": "full",
+      "target": "bucket_spend_t_plus_1",
+      "rows": {
+        "train": 501571,
+        "test": 30616
+      },
+      "cv": {
+        "strategy": "TimeSeriesSplit(n_splits=5)",
+        "fold_metrics_file": "full_spend_fold_metrics.csv",
+        "fold_per_class_file": "full_spend_fold_per_class_metrics.csv",
+        "stability": {
+          "random_forest": {
+            "degradation": "no",
+            "relative_drop": 0.04988496418050608,
+            "head_mean_f1": 0.5992292067548042,
+            "tail_mean_f1": 0.5693366792399277
+          },
+          "logistic_regression": {
+            "degradation": "no",
+            "relative_drop": 0.09569049070603523,
+            "head_mean_f1": 0.45730884299763025,
+            "tail_mean_f1": 0.4135487354069778
+          },
+          "sgd_classifier": {
+            "degradation": "no",
+            "relative_drop": 0.07949756739352054,
+            "head_mean_f1": 0.46993120566025026,
+            "tail_mean_f1": 0.43257281796795616
+          }
+        }
+      },
+      "acceptance": {
+        "gain_formula": "(F1_model - F1_persistence) / F1_persistence",
+        "relative_gain_vs_persistence": 1.313983233447776,
+        "passes_50pct_gain": true,
+        "passes_70pct_gain": true
+      },
+      "test": {
+        "baseline_persistence": {
+          "f1_macro": 0.19855953042175312,
+          "balanced_accuracy": 0.20441177330210034,
+          "per_class": {
+            "0": {
+              "precision": 0.13147410358565736,
+              "recall": 0.07322485207100592,
+              "f1": 0.09406175771971496,
+              "support": 6760
+            },
+            "1": {
+              "precision": 0.00340954673084637,
+              "recall": 0.003844414292175486,
+              "f1": 0.0036139455782312926,
+              "support": 4422
+            },
+            "2": {
+              "precision": 0.39596396396396394,
+              "recall": 0.44110798875953433,
+              "f1": 0.41731864793011775,
+              "support": 12455
+            },
+            "3": {
+              "precision": 0.2615769712140175,
+              "recall": 0.2994698380856856,
+              "f1": 0.2792437704589485,
+              "support": 6979
+            }
+          },
+          "confusion_matrix": [
+            [
+              495,
+              751,
+              3768,
+              1746
+            ],
+            [
+              679,
+              17,
+              2290,
+              1436
+            ],
+            [
+              1488,
+              2755,
+              5494,
+              2718
+            ],
+            [
+              1103,
+              1463,
+              2323,
+              2090
+            ]
+          ]
+        },
+        "baseline_majority": {
+          "f1_macro": 0.1445868449768986,
+          "balanced_accuracy": 0.25,
+          "per_class": {
+            "0": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 6760
+            },
+            "1": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 4422
+            },
+            "2": {
+              "precision": 0.40681343088581134,
+              "recall": 1.0,
+              "f1": 0.5783473799075944,
+              "support": 12455
+            },
+            "3": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 6979
+            }
+          },
+          "confusion_matrix": [
+            [
+              0,
+              0,
+              6760,
+              0
+            ],
+            [
+              0,
+              0,
+              4422,
+              0
+            ],
+            [
+              0,
+              0,
+              12455,
+              0
+            ],
+            [
+              0,
+              0,
+              6979,
+              0
+            ]
+          ]
+        },
+        "random_forest": {
+          "f1_macro": 0.4594634242372003,
+          "balanced_accuracy": 0.5355173590111918,
+          "per_class": {
+            "0": {
+              "precision": 0.448917268184342,
+              "recall": 0.23920118343195265,
+              "f1": 0.31210191082802546,
+              "support": 6760
+            },
+            "1": {
+              "precision": 0.3232661256588304,
+              "recall": 0.8738127544097694,
+              "f1": 0.4719389312977099,
+              "support": 4422
+            },
+            "2": {
+              "precision": 0.7391915641476274,
+              "recall": 0.3376957045363308,
+              "f1": 0.4635987875447782,
+              "support": 12455
+            },
+            "3": {
+              "precision": 0.5148863515099776,
+              "recall": 0.6913597936667144,
+              "f1": 0.5902140672782875,
+              "support": 6979
+            }
+          },
+          "confusion_matrix": [
+            [
+              1617,
+              2696,
+              821,
+              1626
+            ],
+            [
+              100,
+              3864,
+              95,
+              363
+            ],
+            [
+              1347,
+              4345,
+              4206,
+              2557
+            ],
+            [
+              538,
+              1048,
+              568,
+              4825
+            ]
+          ]
+        },
+        "logistic_regression": {
+          "f1_macro": 0.3635175165615172,
+          "balanced_accuracy": 0.401963714188601,
+          "per_class": {
+            "0": {
+              "precision": 0.20613781123335265,
+              "recall": 0.2106508875739645,
+              "f1": 0.2083699151302312,
+              "support": 6760
+            },
+            "1": {
+              "precision": 0.2622226585509523,
+              "recall": 0.6040253279059249,
+              "f1": 0.36569003285870755,
+              "support": 4422
+            },
+            "2": {
+              "precision": 0.5492629945694336,
+              "recall": 0.2842232035327178,
+              "f1": 0.3746031746031746,
+              "support": 12455
+            },
+            "3": {
+              "precision": 0.5019075879610004,
+              "recall": 0.5089554377417969,
+              "f1": 0.5054069436539556,
+              "support": 6979
+            }
+          },
+          "confusion_matrix": [
+            [
+              1424,
+              2755,
+              1295,
+              1286
+            ],
+            [
+              729,
+              2671,
+              609,
+              413
+            ],
+            [
+              3698,
+              3391,
+              3540,
+              1826
+            ],
+            [
+              1057,
+              1369,
+              1001,
+              3552
+            ]
+          ]
+        },
+        "sgd_classifier": {
+          "f1_macro": 0.3869079066296698,
+          "balanced_accuracy": 0.42327631176273106,
+          "per_class": {
+            "0": {
+              "precision": 0.2553282182438193,
+              "recall": 0.0886094674556213,
+              "f1": 0.13156160773116626,
+              "support": 6760
+            },
+            "1": {
+              "precision": 0.2695910944560785,
+              "recall": 0.5531433740388965,
+              "f1": 0.3625046313449426,
+              "support": 4422
+            },
+            "2": {
+              "precision": 0.5604899183469422,
+              "recall": 0.5401043757527098,
+              "f1": 0.5501083534366439,
+              "support": 12455
+            },
+            "3": {
+              "precision": 0.49589993050729675,
+              "recall": 0.5112480298036968,
+              "f1": 0.5034570340059263,
+              "support": 6979
+            }
+          },
+          "confusion_matrix": [
+            [
+              599,
+              2513,
+              2279,
+              1369
+            ],
+            [
+              405,
+              2446,
+              1122,
+              449
+            ],
+            [
+              949,
+              2970,
+              6727,
+              1809
+            ],
+            [
+              393,
+              1144,
+              1874,
+              3568
+            ]
+          ]
+        }
+      }
+    },
+    "classification_full_net": {
+      "execution_timestamp": "2026-04-13T11:52:09.460537+00:00",
+      "run_mode": "full",
+      "target": "bucket_net_t_plus_1",
+      "rows": {
+        "train": 501571,
+        "test": 30616
+      },
+      "cv": {
+        "strategy": "TimeSeriesSplit(n_splits=5)",
+        "fold_metrics_file": "full_net_fold_metrics.csv",
+        "fold_per_class_file": "full_net_fold_per_class_metrics.csv",
+        "stability": {
+          "random_forest": {
+            "degradation": "no",
+            "relative_drop": 0.027640291617755407,
+            "head_mean_f1": 0.5179269265499036,
+            "tail_mean_f1": 0.5036112752633765
+          },
+          "logistic_regression": {
+            "degradation": "no",
+            "relative_drop": 0.054767574531296354,
+            "head_mean_f1": 0.40183186834123974,
+            "tail_mean_f1": 0.3798245115428108
+          },
+          "sgd_classifier": {
+            "degradation": "no",
+            "relative_drop": -0.004668370231541124,
+            "head_mean_f1": 0.41479173891529697,
+            "tail_mean_f1": 0.4167281403215383
+          }
+        }
+      },
+      "acceptance": {
+        "gain_formula": "(F1_model - F1_persistence) / F1_persistence",
+        "relative_gain_vs_persistence": 1.2625068618011355,
+        "passes_50pct_gain": true,
+        "passes_70pct_gain": true
+      },
+      "test": {
+        "baseline_persistence": {
+          "f1_macro": 0.21302468266722488,
+          "balanced_accuracy": 0.20960790756747966,
+          "per_class": {
+            "0": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 3
+            },
+            "1": {
+              "precision": 0.2013185203271884,
+              "recall": 0.23356940509915014,
+              "f1": 0.21624811487771295,
+              "support": 7060
+            },
+            "2": {
+              "precision": 0.6169174461163074,
+              "recall": 0.5423991418866575,
+              "f1": 0.5772633581734581,
+              "support": 16781
+            },
+            "3": {
+              "precision": 0.05516431924882629,
+              "recall": 0.06246308328411104,
+              "f1": 0.05858725761772853,
+              "support": 6772
+            }
+          },
+          "confusion_matrix": [
+            [
+              0,
+              1,
+              2,
+              0
+            ],
+            [
+              0,
+              1649,
+              2013,
+              3398
+            ],
+            [
+              2,
+              3830,
+              9102,
+              3847
+            ],
+            [
+              1,
+              2711,
+              3637,
+              423
+            ]
+          ]
+        },
+        "baseline_majority": {
+          "f1_macro": 0.17702597210793933,
+          "balanced_accuracy": 0.25,
+          "per_class": {
+            "0": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 3
+            },
+            "1": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 7060
+            },
+            "2": {
+              "precision": 0.5481120982492814,
+              "recall": 1.0,
+              "f1": 0.7081038884317573,
+              "support": 16781
+            },
+            "3": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 6772
+            }
+          },
+          "confusion_matrix": [
+            [
+              0,
+              0,
+              3,
+              0
+            ],
+            [
+              0,
+              0,
+              7060,
+              0
+            ],
+            [
+              0,
+              0,
+              16781,
+              0
+            ],
+            [
+              0,
+              0,
+              6772,
+              0
+            ]
+          ]
+        },
+        "random_forest": {
+          "f1_macro": 0.48196980626760566,
+          "balanced_accuracy": 0.4972263653227955,
+          "per_class": {
+            "0": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 3
+            },
+            "1": {
+              "precision": 0.49127336569245067,
+              "recall": 0.6737960339943343,
+              "f1": 0.5682374723765156,
+              "support": 7060
+            },
+            "2": {
+              "precision": 0.8137755102040817,
+              "recall": 0.6463262022525476,
+              "f1": 0.7204490351722076,
+              "support": 16781
+            },
+            "3": {
+              "precision": 0.6121097445600757,
+              "recall": 0.6687832250443001,
+              "f1": 0.6391927175216993,
+              "support": 6772
+            }
+          },
+          "confusion_matrix": [
+            [
+              0,
+              0,
+              3,
+              0
+            ],
+            [
+              30,
+              4757,
+              1195,
+              1078
+            ],
+            [
+              150,
+              3993,
+              10846,
+              1792
+            ],
+            [
+              26,
+              933,
+              1284,
+              4529
+            ]
+          ]
+        },
+        "logistic_regression": {
+          "f1_macro": 0.36580884896726046,
+          "balanced_accuracy": 0.5122864805006149,
+          "per_class": {
+            "0": {
+              "precision": 0.0002414875633904854,
+              "recall": 0.6666666666666666,
+              "f1": 0.0004828002414001207,
+              "support": 3
+            },
+            "1": {
+              "precision": 0.4906352324819908,
+              "recall": 0.5305949008498584,
+              "f1": 0.5098332766247022,
+              "support": 7060
+            },
+            "2": {
+              "precision": 0.7039331896551724,
+              "recall": 0.31142363387164057,
+              "f1": 0.43181160917165873,
+              "support": 16781
+            },
+            "3": {
+              "precision": 0.5030927835051546,
+              "recall": 0.5404607206142942,
+              "f1": 0.5211077098312807,
+              "support": 6772
+            }
+          },
+          "confusion_matrix": [
+            [
+              2,
+              0,
+              1,
+              0
+            ],
+            [
+              1018,
+              3746,
+              1031,
+              1265
+            ],
+            [
+              6104,
+              3101,
+              5226,
+              2350
+            ],
+            [
+              1158,
+              788,
+              1166,
+              3660
+            ]
+          ]
+        },
+        "sgd_classifier": {
+          "f1_macro": 0.4196376010209192,
+          "balanced_accuracy": 0.40637391637218795,
+          "per_class": {
+            "0": {
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "support": 3
+            },
+            "1": {
+              "precision": 0.5115030674846626,
+              "recall": 0.4723796033994334,
+              "f1": 0.49116347569955815,
+              "support": 7060
+            },
+            "2": {
+              "precision": 0.6927384285458986,
+              "recall": 0.6929861152493892,
+              "f1": 0.6928622497616778,
+              "support": 16781
+            },
+            "3": {
+              "precision": 0.5344768439108062,
+              "recall": 0.46012994683992914,
+              "f1": 0.49452467862244087,
+              "support": 6772
+            }
+          },
+          "confusion_matrix": [
+            [
+              0,
+              0,
+              3,
+              0
+            ],
+            [
+              390,
+              3335,
+              2284,
+              1051
+            ],
+            [
+              975,
+              2514,
+              11629,
+              1663
+            ],
+            [
+              114,
+              671,
+              2871,
+              3116
+            ]
+          ]
+        }
+      }
+    },
+    "regression_full": {
+      "execution_timestamp": "2026-04-13T12:11:03.385299+00:00",
+      "run_mode": "full",
+      "cv_strategy": "TimeSeriesSplit(n_splits=3)",
+      "rows": {
+        "train": 913943,
+        "test": 38118
+      },
+      "baselines_test": {
+        "persistence_last_value": {
+          "mae": 3933.4632273466605,
+          "rmse": 10034.17002626107,
+          "mape_positive_only": 84.6943439626681
+        },
+        "rolling_mean_4": {
+          "mae": 3385.9601026199343,
+          "rmse": 8066.423693882676,
+          "mape_positive_only": 77.34400651403558
+        }
+      },
+      "models_test": {
+        "ridge": {
+          "mae": 3530.5118152210002,
+          "rmse": 7805.103535399101,
+          "mape_positive_only": 344.3318701645262,
+          "skill_mae_vs_persistence": 0.8975581087617098
+        },
+        "elasticnet": {
+          "mae": 3530.607171599775,
+          "rmse": 7806.427476347268,
+          "mape_positive_only": 348.74585642300156,
+          "skill_mae_vs_persistence": 0.8975823511082791
+        },
+        "sgd_regressor": {
+          "mae": 3538.6337714559604,
+          "rmse": 7825.775636647552,
+          "mape_positive_only": 403.2081777563503,
+          "skill_mae_vs_persistence": 0.8996229447003031
+        }
+      },
+      "cv_mae": {
+        "ridge": [
+          2986.49387807764,
+          3003.419182561247,
+          2756.6702089582145
+        ],
+        "elasticnet": [
+          2984.742930097364,
+          3001.7874936424146,
+          2755.1384562616877
+        ],
+        "sgd_regressor": [
+          3070.7618580255835,
+          3078.5952235225427,
+          2838.14526837539
+        ]
+      },
+      "cv_fold_metrics_file": "full_fold_metrics.csv",
+      "stability": {
+        "ridge": {
+          "degradation": "no",
+          "relative_increase": -0.038368448221669675,
+          "head_mean_mae": 2994.9565303194436,
+          "tail_mean_mae": 2880.0446957597305
+        },
+        "elasticnet": {
+          "degradation": "no",
+          "relative_increase": -0.038353513234506066,
+          "head_mean_mae": 2993.2652118698893,
+          "tail_mean_mae": 2878.462974952051
+        },
+        "sgd_regressor": {
+          "degradation": "no",
+          "relative_increase": -0.03782779021699472,
+          "head_mean_mae": 3074.678540774063,
+          "tail_mean_mae": 2958.3702459489664
+        }
+      },
+      "acceptance": {
+        "gain_formula": "(MAE_persistence - MAE_model) / MAE_persistence",
+        "best_improvement": 0.10244189123829012,
+        "passes_50pct_gain": false,
+        "passes_70pct_gain": false
+      },
+      "top_category_metrics_ridge": [
+        {
+          "category": "outflow:vyber",
+          "support": 9434,
+          "mae": 7809.3930760851545,
+          "rmse": 11952.236287350472
+        },
+        {
+          "category": "inflow:urok",
+          "support": 8683,
+          "mae": 259.1467148036674,
+          "rmse": 468.3597085341379
+        },
+        {
+          "category": "inflow:vklad",
+          "support": 5037,
+          "mae": 8791.131335519221,
+          "rmse": 12760.37244830755
+        },
+        {
+          "category": "outflow:sluzby",
+          "support": 4364,
+          "mae": 210.9723877607485,
+          "rmse": 312.3911370812041
+        },
+        {
+          "category": "outflow:sipo",
+          "support": 4297,
+          "mae": 443.267623074657,
+          "rmse": 569.3140287464431
+        },
+        {
+          "category": "outflow:prevod na ucet",
+          "support": 2127,
+          "mae": 590.3676801701794,
+          "rmse": 860.5377853383729
+        },
+        {
+          "category": "inflow:prevod z uctu",
+          "support": 1108,
+          "mae": 7966.3015922708655,
+          "rmse": 11519.80044510048
+        },
+        {
+          "category": "inflow:duchod",
+          "support": 981,
+          "mae": 143.68677704664128,
+          "rmse": 171.2466375681203
+        },
+        {
+          "category": "outflow:uver",
+          "support": 854,
+          "mae": 492.3363124608335,
+          "rmse": 631.0119666012888
+        },
+        {
+          "category": "outflow:pojistne",
+          "support": 659,
+          "mae": 301.90107576031096,
+          "rmse": 428.84829532566
+        }
+      ]
+    }
+  }
+}

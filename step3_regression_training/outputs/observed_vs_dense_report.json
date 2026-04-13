@@ -1,0 +1,20 @@
+{
+  "categories": 12,
+  "observed_only_test": {
+    "rows": 38118,
+    "target_zero_rate": 0.0,
+    "persistence_mae": 3933.46322734666,
+    "rolling4_mae": 3385.9601026199343
+  },
+  "dense_test": {
+    "rows": 288036,
+    "target_zero_rate": 0.8676623755363913,
+    "persistence_mae": 520.5451794220168,
+    "rolling4_mae": 448.0899165092789
+  },
+  "delta_dense_minus_observed": {
+    "persistence_mae": -3412.9180479246434,
+    "rolling4_mae": -2937.8701861106556,
+    "target_zero_rate": 0.8676623755363913
+  }
+}

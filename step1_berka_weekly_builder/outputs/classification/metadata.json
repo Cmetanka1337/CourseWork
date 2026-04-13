@@ -1,0 +1,28 @@
+{
+  "execution_timestamp": "2026-04-13T11:22:41.524949+00:00",
+  "split_logic": "holdout_last_weeks",
+  "split_week": "1998-10-05",
+  "total_users": 4500,
+  "total_weeks": 314,
+  "classification": {
+    "classification_target_default": "bucket_spend_t_plus_1",
+    "alternative_target": "bucket_net_t_plus_1",
+    "q25_spend_train": 14.6,
+    "q75_spend_train": 7028.0,
+    "q25_net_train": -4100.0,
+    "q75_net_train": 3401.0,
+    "train_rows": 501571,
+    "test_rows": 30616,
+    "train_weeks": 302,
+    "test_weeks": 12
+  },
+  "regression": {
+    "regression_format": "observed-only",
+    "zero_rate_target_train": 1.0941601390896369e-05,
+    "zero_rate_target_test": 0.0,
+    "train_rows": 913943,
+    "test_rows": 38118,
+    "train_categories": 12,
+    "test_categories": 12
+  }
+}
