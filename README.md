@@ -76,10 +76,12 @@ python3 step0_berka_ingestion/run_berka_ingestion.py
 python3 step1_berka_weekly_builder/run_build_weekly.py
 python3 step3_model_training_berka/train_classification.py --quick
 python3 step3_model_training_berka/train_classification.py --quick --target bucket_net_t_plus_1
+python3 step3_model_training_berka/train_classification.py --quick --target bucket_spend_t_plus_1 --save-prefix quick_spend_tuned --tune-rf --rf-tune-iter 6
 python3 step3_regression_training/train_regression.py --quick
 python3 step3_model_training_berka/generate_quick_vs_full_comparison.py
 python3 reports/berka_feasibility/generate_feasibility_report.py
 python3 reports/berka_feasibility/generate_dataset_analysis.py
+python3 reports/berka_feasibility/generate_feature_iteration_01.py
 ```
 
 See full instructions in `docs/berka_evaluation.md`.
@@ -88,6 +90,7 @@ Key Berka artifacts:
 
 - `step3_model_training_berka/outputs/classification_report_full.json`
 - `step3_model_training_berka/outputs/quick_vs_full_comparison.md`
+- `reports/berka_feasibility/feature_iteration_01.md`
 - `step3_regression_training/outputs/regression_report_full.json`
 - `reports/berka_feasibility/berka_dataset_analysis.md`
 

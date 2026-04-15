@@ -1,5 +1,5 @@
 {
-  "execution_timestamp": "2026-04-13T11:22:41.524949+00:00",
+  "execution_timestamp": "2026-04-15T17:32:28.269250+00:00",
   "split_logic": "holdout_last_weeks",
   "split_week": "1998-10-05",
   "total_users": 4500,
@@ -7,6 +7,13 @@
   "classification": {
     "classification_target_default": "bucket_spend_t_plus_1",
     "alternative_target": "bucket_net_t_plus_1",
+    "feature_fill_policy": "Lag/rolling/regularity NaN filled with 0.0",
+    "calendar_definition": {
+      "week_start": "monday",
+      "week_of_month": "1 + floor((day(week_start)-1)/7)",
+      "is_month_start_week": "week_start.day <= 7",
+      "is_month_end_week": "week_end in last 7 days of month"
+    },
     "q25_spend_train": 14.6,
     "q75_spend_train": 7028.0,
     "q25_net_train": -4100.0,

@@ -46,6 +46,37 @@ def assign_bucket(values: pd.Series, q25: float, q75: float) -> pd.Series:
     return pd.Series(out, index=values.index).astype(int)
 
 
+def compute_weeks_since_positive(shifted_series: pd.Series, cap: int = 52) -> pd.Series:
+    """Weeks since the last positive event using only past data (series should already be shifted)."""
+    values = shifted_series.fillna(0.0).to_numpy(dtype=float)
+    out = np.zeros(len(values), dtype=float)
+    last_positive = None
+    for idx, val in enumerate(values):
+        if last_positive is None:
+            out[idx] = float(cap)
+        else:
+            gap = idx - last_positive
+            out[idx] = float(cap if gap > cap else gap)
+        if val > 0:
+            last_positive = idx
+    return pd.Series(out, index=shifted_series.index)
+
+
+def add_calendar_features(df: pd.DataFrame) -> pd.DataFrame:
+    ws = pd.to_datetime(df["week_start"], errors="coerce")
+    iso = ws.dt.isocalendar()
+    week_end = ws + pd.to_timedelta(6, unit="D")
+    month_end = week_end + pd.offsets.MonthEnd(0)
+
+    df["week_of_year"] = iso["week"].astype(int)
+    df["month"] = ws.dt.month.astype(int)
+    df["quarter"] = ws.dt.quarter.astype(int)
+    df["week_of_month"] = (1 + ((ws.dt.day - 1) // 7)).astype(int)
+    df["is_month_start_week"] = (ws.dt.day <= 7).astype(int)
+    df["is_month_end_week"] = ((month_end - week_end).dt.days <= 6).astype(int)
+    return df
+
+
 def build_classification(weekly_user: pd.DataFrame, split_week: pd.Timestamp) -> tuple[pd.DataFrame, pd.DataFrame, dict]:
     train_base = weekly_user[weekly_user["week_start"] <= split_week].copy()
     q25_spend = float(train_base["weekly_outflow_t"].quantile(0.25))
@@ -57,6 +88,7 @@ def build_classification(weekly_user: pd.DataFrame, split_week: pd.Timestamp) ->
     all_df["bucket_spend_t"] = assign_bucket(all_df["weekly_outflow_t"], q25_spend, q75_spend)
     all_df["bucket_net_t"] = assign_bucket(all_df["weekly_net_t"], q25_net, q75_net)
 
+    all_df = add_calendar_features(all_df)
     by_user = all_df.groupby("user_id", sort=False)
     all_df["target_spend_t_plus_1"] = by_user["weekly_outflow_t"].shift(-1)
     all_df["target_net_t_plus_1"] = by_user["weekly_net_t"].shift(-1)
@@ -68,8 +100,71 @@ def build_classification(weekly_user: pd.DataFrame, split_week: pd.Timestamp) ->
     all_df["weekly_net_t_minus_1"] = by_user["weekly_net_t"].shift(1).fillna(0.0)
     all_df["weekly_inflow_t_minus_2"] = by_user["weekly_inflow_t"].shift(2).fillna(0.0)
     all_df["weekly_outflow_t_minus_2"] = by_user["weekly_outflow_t"].shift(2).fillna(0.0)
+
+    all_df["delta_inflow"] = all_df["weekly_inflow_t"] - all_df["weekly_inflow_t_minus_1"]
+    all_df["delta_outflow"] = all_df["weekly_outflow_t"] - all_df["weekly_outflow_t_minus_1"]
+
+    eps = 1e-6
+    all_df["inflow_outflow_ratio"] = (all_df["weekly_inflow_t"] / (all_df["weekly_outflow_t"] + eps)).clip(0.0, 10.0)
+    all_df["inflow_share"] = (
+        all_df["weekly_inflow_t"] / (all_df["weekly_inflow_t"] + all_df["weekly_outflow_t"] + eps)
+    ).clip(0.0, 1.0)
+
+    shifted_inflow = by_user["weekly_inflow_t"].shift(1)
+    shifted_outflow = by_user["weekly_outflow_t"].shift(1)
+    all_df["inflow_rolling_mean_8w"] = shifted_inflow.groupby(all_df["user_id"]).transform(
+        lambda s: s.rolling(8, min_periods=1).mean()
+    )
+    all_df["inflow_rolling_std_8w"] = shifted_inflow.groupby(all_df["user_id"]).transform(
+        lambda s: s.rolling(8, min_periods=1).std()
+    )
+    all_df["outflow_rolling_mean_8w"] = shifted_outflow.groupby(all_df["user_id"]).transform(
+        lambda s: s.rolling(8, min_periods=1).mean()
+    )
+    all_df["outflow_rolling_std_8w"] = shifted_outflow.groupby(all_df["user_id"]).transform(
+        lambda s: s.rolling(8, min_periods=1).std()
+    )
+
+    shifted_inflow_positive = (shifted_inflow > 0).astype(float)
+    shifted_outflow_positive = (shifted_outflow > 0).astype(float)
+    all_df["inflow_frequency_8w"] = shifted_inflow_positive.groupby(all_df["user_id"]).transform(
+        lambda s: s.rolling(8, min_periods=1).mean()
+    )
+    all_df["outflow_frequency_8w"] = shifted_outflow_positive.groupby(all_df["user_id"]).transform(
+        lambda s: s.rolling(8, min_periods=1).mean()
+    )
+
+    all_df["weeks_since_inflow"] = by_user["weekly_inflow_t"].transform(
+        lambda s: compute_weeks_since_positive(s.shift(1), cap=52)
+    )
+    all_df["weeks_since_outflow"] = by_user["weekly_outflow_t"].transform(
+        lambda s: compute_weeks_since_positive(s.shift(1), cap=52)
+    )
+
     all_df["outflow_inflow_ratio_t"] = all_df["weekly_outflow_t"] / all_df["weekly_inflow_t"].replace(0, np.nan)
     all_df["outflow_inflow_ratio_t"] = all_df["outflow_inflow_ratio_t"].replace([np.inf, -np.inf], np.nan).fillna(0.0)
+
+    fill_zero_cols = [
+        "weekly_inflow_t_minus_1",
+        "weekly_outflow_t_minus_1",
+        "weekly_net_t_minus_1",
+        "weekly_inflow_t_minus_2",
+        "weekly_outflow_t_minus_2",
+        "delta_inflow",
+        "delta_outflow",
+        "inflow_outflow_ratio",
+        "inflow_share",
+        "inflow_rolling_mean_8w",
+        "inflow_rolling_std_8w",
+        "outflow_rolling_mean_8w",
+        "outflow_rolling_std_8w",
+        "inflow_frequency_8w",
+        "outflow_frequency_8w",
+        "weeks_since_inflow",
+        "weeks_since_outflow",
+        "outflow_inflow_ratio_t",
+    ]
+    all_df[fill_zero_cols] = all_df[fill_zero_cols].replace([np.inf, -np.inf], np.nan).fillna(0.0)
 
     lag_df = all_df.dropna(subset=["bucket_spend_t_plus_1", "target_spend_t_plus_1"]).copy()
     lag_df["bucket_spend_t_plus_1"] = lag_df["bucket_spend_t_plus_1"].astype(int)
@@ -78,9 +173,19 @@ def build_classification(weekly_user: pd.DataFrame, split_week: pd.Timestamp) ->
     train_lag = lag_df[lag_df["week_start"] <= split_week].copy()
     test_lag = lag_df[lag_df["week_start"] > split_week].copy()
 
+    if train_lag.isna().any().any() or test_lag.isna().any().any():
+        raise RuntimeError("NaN values detected in classification lag features after fill policy")
+
     meta = {
         "classification_target_default": "bucket_spend_t_plus_1",
         "alternative_target": "bucket_net_t_plus_1",
+        "feature_fill_policy": "Lag/rolling/regularity NaN filled with 0.0",
+        "calendar_definition": {
+            "week_start": "monday",
+            "week_of_month": "1 + floor((day(week_start)-1)/7)",
+            "is_month_start_week": "week_start.day <= 7",
+            "is_month_end_week": "week_end in last 7 days of month",
+        },
         "q25_spend_train": q25_spend,
         "q75_spend_train": q75_spend,
         "q25_net_train": q25_net,
@@ -140,8 +245,8 @@ def build_regression(tx: pd.DataFrame, weekly_user: pd.DataFrame, split_week: pd
 
     meta = {
         "regression_format": "observed-only",
-        "zero_rate_target_train": float(np.mean((train_reg["amount_cat_t_plus_1"] == 0).to_numpy(dtype=float))),
-        "zero_rate_target_test": float(np.mean((test_reg["amount_cat_t_plus_1"] == 0).to_numpy(dtype=float))),
+        "zero_rate_target_train": float((train_reg["amount_cat_t_plus_1"] == 0).mean()),
+        "zero_rate_target_test": float((test_reg["amount_cat_t_plus_1"] == 0).mean()),
     }
     return train_reg, test_reg, meta
 

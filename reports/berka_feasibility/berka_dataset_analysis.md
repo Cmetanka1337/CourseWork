@@ -32,8 +32,8 @@ Interpretation for RF suitability:
 - `outflow:uver`: 12898
 
 ## 4) Full-run model evidence snapshot
-- Classification (spend target): baseline=0.1986, RF=0.4595, LR=0.3635, relative_gain=1.3140
-- Classification (net target): baseline=0.2130, RF=0.4820, LR=0.3658, relative_gain=1.2625
+- Classification (spend target): baseline=0.1986, RF=0.4750, LR=0.4609, relative_gain=1.3924
+- Classification (net target): baseline=0.2130, RF=0.4928, LR=0.4206, relative_gain=1.3134
 - Regression full: baseline MAE=3933.46, Ridge=3530.51, SGD=3538.63, relative_improvement=0.1024
 
 ## 5) Methodological references

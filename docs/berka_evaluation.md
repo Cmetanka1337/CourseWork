@@ -40,6 +40,15 @@ python3 step3_model_training_berka/train_classification.py \
   --output-dir step3_model_training_berka/outputs \
   --target bucket_net_t_plus_1
 
+# Optional RF tuning experiment (separate run, no test leakage)
+python3 step3_model_training_berka/train_classification.py \
+  --input-dir step1_berka_weekly_builder/outputs/classification \
+  --output-dir step3_model_training_berka/outputs \
+  --target bucket_spend_t_plus_1 \
+  --save-prefix full_spend_tuned \
+  --tune-rf \
+  --rf-tune-iter 10
+
 python3 step3_regression_training/train_regression.py \
   --input-dir step1_berka_weekly_builder/outputs/regression \
   --output-dir step3_regression_training/outputs
@@ -58,6 +67,11 @@ python3 reports/berka_feasibility/generate_dataset_analysis.py \
   --weekly-dir step1_berka_weekly_builder/outputs \
   --classification-output-dir step3_model_training_berka/outputs \
   --regression-output-dir step3_regression_training/outputs
+
+python3 reports/berka_feasibility/generate_feature_iteration_01.py \
+  --output-dir step3_model_training_berka/outputs \
+  --before-dir step3_model_training_berka/outputs/feature_iteration_01_before \
+  --report-path reports/berka_feasibility/feature_iteration_01.md
 ```
 
 ## 3) Quick smoke mode
@@ -78,6 +92,7 @@ python3 step3_model_training_berka/generate_quick_vs_full_comparison.py
 - `step3_model_training_berka/outputs/fold_metrics.csv`
 - `step3_model_training_berka/outputs/quick_vs_full_comparison.md`
 - `step3_model_training_berka/outputs/*stability_f1_by_fold.png`
+- `reports/berka_feasibility/feature_iteration_01.md`
 - `step3_regression_training/outputs/regression_report_full.json`
 - `step3_regression_training/outputs/regression_report_quick.json`
 - `step3_regression_training/outputs/*fold_metrics.csv`

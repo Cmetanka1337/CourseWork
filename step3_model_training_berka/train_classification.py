@@ -10,13 +10,46 @@ import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression, SGDClassifier
 from sklearn.metrics import balanced_accuracy_score, confusion_matrix, f1_score, precision_recall_fscore_support
-from sklearn.model_selection import TimeSeriesSplit
+from sklearn.model_selection import RandomizedSearchCV, TimeSeriesSplit
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 
 
 TARGET_CHOICES = ["bucket_spend_t_plus_1", "bucket_net_t_plus_1"]
 LABELS = [0, 1, 2, 3]
+CLASSIFICATION_FEATURES = [
+    "bucket_spend_t",
+    "bucket_net_t",
+    "weekly_inflow_t",
+    "weekly_outflow_t",
+    "weekly_net_t",
+    "txn_count_t",
+    "category_diversity_t",
+    "weekly_inflow_t_minus_1",
+    "weekly_outflow_t_minus_1",
+    "weekly_net_t_minus_1",
+    "weekly_inflow_t_minus_2",
+    "weekly_outflow_t_minus_2",
+    "outflow_inflow_ratio_t",
+    "week_of_year",
+    "month",
+    "quarter",
+    "week_of_month",
+    "is_month_start_week",
+    "is_month_end_week",
+    "delta_inflow",
+    "delta_outflow",
+    "inflow_outflow_ratio",
+    "inflow_share",
+    "inflow_rolling_mean_8w",
+    "inflow_rolling_std_8w",
+    "outflow_rolling_mean_8w",
+    "outflow_rolling_std_8w",
+    "inflow_frequency_8w",
+    "outflow_frequency_8w",
+    "weeks_since_inflow",
+    "weeks_since_outflow",
+]
 
 
 def parse_args() -> argparse.Namespace:
@@ -31,6 +64,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--target", type=str, default="bucket_spend_t_plus_1", choices=TARGET_CHOICES)
     parser.add_argument("--quick", action="store_true", help="Fast smoke mode")
     parser.add_argument("--save-prefix", type=str, default="", help="Optional prefix for report/model files")
+    parser.add_argument("--tune-rf", action="store_true", help="Run TimeSeriesSplit-based RF tuning on training data")
+    parser.add_argument("--rf-tune-iter", type=int, default=18, help="RandomizedSearch iterations for RF tuning")
     return parser.parse_args()
 
 
@@ -57,25 +92,49 @@ def metrics(y_true: np.ndarray, y_pred: np.ndarray) -> dict:
 
 
 def prepare_xy(df: pd.DataFrame, target: str) -> tuple[pd.DataFrame, pd.Series]:
-    features = [
-        "bucket_spend_t",
-        "bucket_net_t",
-        "weekly_inflow_t",
-        "weekly_outflow_t",
-        "weekly_net_t",
-        "txn_count_t",
-        "category_diversity_t",
-        "weekly_inflow_t_minus_1",
-        "weekly_outflow_t_minus_1",
-        "weekly_net_t_minus_1",
-        "weekly_inflow_t_minus_2",
-        "weekly_outflow_t_minus_2",
-        "outflow_inflow_ratio_t",
-    ]
-    missing = [c for c in features + [target] if c not in df.columns]
+    missing = [c for c in CLASSIFICATION_FEATURES + [target] if c not in df.columns]
     if missing:
         raise RuntimeError(f"Missing required columns: {missing}")
-    return df[features].copy(), df[target].astype(int)
+    return df[CLASSIFICATION_FEATURES].copy(), df[target].astype(int)
+
+
+def tune_random_forest(
+    x_train: pd.DataFrame,
+    y_train: pd.Series,
+    is_quick: bool,
+    n_iter: int,
+) -> tuple[RandomForestClassifier, dict]:
+    splits = 3 if is_quick else 4
+    cv = TimeSeriesSplit(n_splits=splits)
+    base_rf = RandomForestClassifier(random_state=42, n_jobs=-1, class_weight="balanced")
+    param_dist = {
+        "n_estimators": [160, 220, 300, 420],
+        "max_depth": [8, 12, 16, None],
+        "min_samples_split": [2, 4, 8, 12],
+        "min_samples_leaf": [1, 2, 4, 8],
+        "max_features": ["sqrt", "log2", 0.5, 0.8],
+    }
+    search = RandomizedSearchCV(
+        estimator=base_rf,
+        param_distributions=param_dist,
+        n_iter=max(1, int(n_iter)),
+        scoring="f1_macro",
+        cv=cv,
+        random_state=42,
+        n_jobs=-1,
+        refit=True,
+    )
+    search.fit(x_train, y_train)
+    best_idx = int(search.best_index_)
+    payload = {
+        "enabled": True,
+        "strategy": f"RandomizedSearchCV(TimeSeriesSplit(n_splits={splits}))",
+        "n_iter": int(search.n_iter),
+        "best_params": search.best_params_,
+        "best_cv_mean_f1_macro": float(search.best_score_),
+        "best_cv_std_f1_macro": float(search.cv_results_["std_test_score"][best_idx]),
+    }
+    return search.best_estimator_, payload
 
 
 def build_model_factories(is_quick: bool):
@@ -238,8 +297,17 @@ def main() -> None:
         n_splits=folds,
     )
 
-    rf_model = model_factories["random_forest"]()
-    rf_model.fit(x_train, y_train)
+    rf_tuning = {"enabled": False}
+    if args.tune_rf:
+        rf_model, rf_tuning = tune_random_forest(
+            x_train=x_train,
+            y_train=y_train,
+            is_quick=args.quick,
+            n_iter=args.rf_tune_iter,
+        )
+    else:
+        rf_model = model_factories["random_forest"]()
+        rf_model.fit(x_train, y_train)
     lr_model = model_factories["logistic_regression"]()
     lr_model.fit(x_train, y_train)
     sgd_model = model_factories["sgd_classifier"]()
@@ -262,12 +330,14 @@ def main() -> None:
             "strategy": f"TimeSeriesSplit(n_splits={folds})",
             "fold_metrics_file": prefixed(prefix, "fold_metrics.csv"),
             "fold_per_class_file": prefixed(prefix, "fold_per_class_metrics.csv"),
+            "feature_count": len(CLASSIFICATION_FEATURES),
             "stability": {
                 "random_forest": stability_summary(fold_df, "random_forest"),
                 "logistic_regression": stability_summary(fold_df, "logistic_regression"),
                 "sgd_classifier": stability_summary(fold_df, "sgd_classifier"),
             },
         },
+        "rf_tuning": rf_tuning,
         "acceptance": {
             "gain_formula": "(F1_model - F1_persistence) / F1_persistence",
             "relative_gain_vs_persistence": gain_vs_persistence_relative,
