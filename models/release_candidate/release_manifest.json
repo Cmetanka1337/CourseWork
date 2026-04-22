@@ -1,0 +1,55 @@
+{
+  "execution_timestamp": "2026-04-22T20:22:59.672586+00:00",
+  "selection_rule": {
+    "primary": "max test.random_forest.f1_macro",
+    "tie_breaker_1": "max test.random_forest.balanced_accuracy",
+    "tie_breaker_2": "min cv.stability.random_forest.relative_drop"
+  },
+  "selected_report": "/Users/vsevolodburtik/CourseWork/pythonProject/step3_model_training_berka/outputs/full_spend_tuned_classification_report.json",
+  "selected_report_copy": "/Users/vsevolodburtik/CourseWork/pythonProject/models/release_candidate/full_spend_tuned_classification_report.json",
+  "selected_prefix": "full_spend_tuned",
+  "selected_model_path": "/Users/vsevolodburtik/CourseWork/pythonProject/step3_model_training_berka/outputs/full_spend_tuned_rf_model.pkl",
+  "target": "bucket_spend_t_plus_1",
+  "run_mode": "full",
+  "metrics": {
+    "rf_f1_macro": 0.48775676315559324,
+    "rf_balanced_accuracy": 0.5664228464678376,
+    "stability_relative_drop": 0.048035063462091465,
+    "relative_gain_vs_persistence": 1.4564762120436463
+  },
+  "feature_count": 31,
+  "feature_passport_path": "/Users/vsevolodburtik/CourseWork/pythonProject/docs/berka_feature_passport_spend_bucket.md",
+  "copied_artifacts": [
+    "/Users/vsevolodburtik/CourseWork/pythonProject/models/release_candidate/full_spend_tuned_classification_report.json",
+    "/Users/vsevolodburtik/CourseWork/pythonProject/models/release_candidate/full_spend_tuned_rf_model.pkl",
+    "/Users/vsevolodburtik/CourseWork/pythonProject/models/release_candidate/golden_inference_set_full_spend_tuned.json",
+    "/Users/vsevolodburtik/CourseWork/pythonProject/models/release_candidate/golden_inference_set_full_spend_tuned.csv",
+    "/Users/vsevolodburtik/CourseWork/pythonProject/models/release_candidate/berka_feature_passport_spend_bucket.md"
+  ],
+  "all_ranked_candidates": [
+    {
+      "path": "/Users/vsevolodburtik/CourseWork/pythonProject/step3_model_training_berka/outputs/full_spend_tuned_classification_report.json",
+      "rf_f1_macro": 0.48775676315559324,
+      "rf_balanced_accuracy": 0.5664228464678376,
+      "stability_relative_drop": 0.048035063462091465
+    },
+    {
+      "path": "/Users/vsevolodburtik/CourseWork/pythonProject/step3_model_training_berka/outputs/full_spend_classification_report.json",
+      "rf_f1_macro": 0.4750305991140137,
+      "rf_balanced_accuracy": 0.5556719026977512,
+      "stability_relative_drop": 0.048035063462091465
+    },
+    {
+      "path": "/Users/vsevolodburtik/CourseWork/pythonProject/step3_model_training_berka/outputs/quick_spend_classification_report.json",
+      "rf_f1_macro": 0.3699462798390554,
+      "rf_balanced_accuracy": 0.403829875063928,
+      "stability_relative_drop": -0.15798117015989876
+    },
+    {
+      "path": "/Users/vsevolodburtik/CourseWork/pythonProject/step3_model_training_berka/outputs/quick_spend_tuned_classification_report.json",
+      "rf_f1_macro": 0.36661676832174217,
+      "rf_balanced_accuracy": 0.4053353678891525,
+      "stability_relative_drop": -0.15798117015989876
+    }
+  ]
+}
