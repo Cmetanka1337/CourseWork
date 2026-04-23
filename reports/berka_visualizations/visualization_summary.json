@@ -1,0 +1,55 @@
+{
+  "overall": {
+    "rf": {
+      "accuracy": 0.5058139534883721,
+      "f1_macro": 0.48775676315559324
+    },
+    "blended": {
+      "accuracy": 0.5215246929709956,
+      "f1_macro": 0.5005116823598085
+    },
+    "persistence": {
+      "accuracy": 0.26443689574078916,
+      "f1_macro": 0.19855953042175312
+    }
+  },
+  "transition_metrics": {
+    "transition": {
+      "rf": 0.5311722912966252,
+      "blended": 0.5374777975133215,
+      "persistence": 0.0
+    },
+    "stable": {
+      "rf": 0.4352766798418972,
+      "blended": 0.477149209486166,
+      "persistence": 1.0
+    }
+  },
+  "trace_users": [
+    2599,
+    2190,
+    4533,
+    7454,
+    2444,
+    2264
+  ],
+  "golden_sanity": {
+    "available": true,
+    "records": 10,
+    "predicted_class_match_rate": 1.0
+  },
+  "config": {
+    "alpha_after_warmup": 0.2,
+    "warmup_weeks": 8,
+    "seed": 42,
+    "personalization": {
+      "update_every_weeks": 2,
+      "history_cap": 20,
+      "learning_rate": 0.05,
+      "l2": 0.001,
+      "grad_clip": 5.0,
+      "sgd_epochs": 20,
+      "seed": 42
+    }
+  }
+}
