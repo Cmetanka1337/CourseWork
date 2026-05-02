@@ -229,7 +229,8 @@
     "users_with_benefit": 1902,
     "users_total": 4476,
     "median_updates_until_benefit": 49.0,
-    "median_weeks_until_benefit": 3.0
+    "median_weeks_until_benefit": 3.0,
+    "time_to_benefit_note": "experimental metric; may be misaligned with update cadence; not used for decisions"
   },
   "small_data_stress_test": {
     "users_count": 14,

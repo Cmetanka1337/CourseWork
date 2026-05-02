@@ -33,6 +33,7 @@ Generated: 2026-04-22T20:25:38.791304+00:00
 - Users reaching benefit: **1902 / 4476**
 - Median updates until benefit: **49.0**
 - Median weeks until benefit: **3.0**
+- Note: `weeks_until_benefit` counts the elapsed weeks between the first eligible update and the update where benefit is first observed, using the configured update cadence.
 
 ## Swift port spec
 - Formula: `p_adj = softmax(W * p_rf + b)` with `W` shape `4x4`, `b` shape `4`.
