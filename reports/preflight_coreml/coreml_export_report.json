@@ -1,0 +1,39 @@
+{
+  "status": "failure",
+  "export": {
+    "requested_model": "rf",
+    "fallback_used": false,
+    "fallback_error": "CoreML conversion failed: 'LogisticRegression' object has no attribute 'multi_class'",
+    "exported_model": "BerkaSpendBucketRF",
+    "coreml_path": "artifacts/coreml/BerkaSpendBucketRF.mlpackage",
+    "coreml_format": "mlpackage",
+    "probabilities_available": true,
+    "class_output_name": "classLabel",
+    "probability_output_name": "classProbability",
+    "error": null
+  },
+  "validation": {
+    "success": false,
+    "match_rate": 0.5,
+    "matches": 5,
+    "total": 10,
+    "prob_sum_min": 419.9999999999997,
+    "prob_sum_max": 420.0000000000002,
+    "prob_sum_mean": 420.0,
+    "invalid_prob_rows": 10,
+    "example": {
+      "expected_class": 0,
+      "predicted_class": 1,
+      "probabilities": {
+        "0": 20.088006086192358,
+        "3": 89.46854609964953,
+        "2": 152.62424668743844,
+        "1": 157.8192011267194
+      },
+      "test_row_index": 1278,
+      "user_id": 201
+    },
+    "error": "Probabilities failed normalization check; sum is not ~1.0."
+  },
+  "rf_validation_error": "Probabilities failed normalization check; sum is not ~1.0."
+}
